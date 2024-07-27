@@ -6,7 +6,8 @@ import avatar from '../assets/Images/avatar.jpg';
 import Modal from 'react-modal';
 import ProfileModal from './Profile/ProfileModal';
 
-function Navbar({ loggedIn, handleLogout }) {
+function Navbar({ loggedIn, handleLogout, user }) {
+  
   const [modalOpen, setModalOpen] = useState(false);
 
   const ToModalOpen = () => {
@@ -23,6 +24,9 @@ function Navbar({ loggedIn, handleLogout }) {
   const handleLogin = () => {
     navigate("/login");
   };
+
+  
+  const userPhoto = user?.photos?.[0]?.value || user?._json?.picture || avatar;
 
   // Custom styles for the modal
 
@@ -74,7 +78,7 @@ function Navbar({ loggedIn, handleLogout }) {
           {
             loggedIn ? (
               <div className='cursor-pointer' onClick={ToModalOpen}>
-                <img src={avatar} alt="" className='h-9 rounded-full' />
+                <img src={userPhoto} alt='Loading...'  className='h-9 rounded-full' />
               </div>
             ) : (
               <button className='bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md' onClick={handleLogin}>
@@ -91,7 +95,7 @@ function Navbar({ loggedIn, handleLogout }) {
             className="fixed inset-0 flex items-center justify-center"
           >
             <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
-              <ProfileModal ToModalClose={ToModalClose} handleLogout={handleLogout} />
+              <ProfileModal ToModalClose={ToModalClose} handleLogout={handleLogout} user={user}/>
             </div>
           </Modal>
 

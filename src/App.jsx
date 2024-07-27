@@ -1,39 +1,69 @@
-import './App.css'
-import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
-import LandingPage from './Pages/LandingPage'
-import Explore from './Pages/Explore'
+import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import LandingPage from './Pages/LandingPage';
+import Explore from './Pages/Explore';
 import LoginPage from './Pages/LoginPage';
-import { useState } from 'react';
-import Navbar from './Components/Navbar';
 import ContactPage from './Pages/ContactPage';
+import Navbar from './Components/Navbar';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  // const [uservalue, setUservalue] = useState()
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const getUser = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const url = `${apiUrl}/login/success`;
+      const { data } = await axios.get(url, { withCredentials: true });
+      if (data.user) {
+        setUser(data.user);
+        setLoggedIn(true);
+        console.log('User details:', data.user);
+      } else {
+        setLoggedIn(false);
+      }
+    } catch (error) {
+      console.log("Login error:", error);
+      setLoggedIn(false);
+    }
+  };
 
-  const handleLogin=()=>{
-    setLoggedIn(true)
-    console.log("logged in");
-  }
+  useEffect(() => {
+    getUser();
+  }, []);
 
-  const handleLogout=()=>{
-    setLoggedIn(false)
-  }
+  const handleLogin = () => {
+    console.log("Logged in");
+    getUser(); 
+  };
+
+  const handleLogout = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      await axios.get(`${apiUrl}/logout`, { withCredentials: true });
+      setLoggedIn(false);
+      setUser(null);
+      console.log("Logged out");
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <Router>
-      <Navbar loggedIn={loggedIn} handleLogout={handleLogout} />
+      <Navbar loggedIn={loggedIn} handleLogout={handleLogout} user={user}/>
       <Routes>
-        <Route path='/' element={<LandingPage/>}/>
-        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />}/>
-        <Route path='/explore' element={<Explore/>}/>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />} />
+        <Route path='/explore' element={<Explore />} />
+        <Route path='/contact' element={<ContactPage />} />
       </Routes>
     </Router>
-
-  //   <>
-  //     <ContactPage/>
-  //   </>
-  )
+  );
 }
 
-export default App
+export default App;

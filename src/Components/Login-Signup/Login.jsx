@@ -11,6 +11,11 @@ const Login = ({switchToForgot,handleLogin}) => {
         navigate("/")
     }
 
+    const handleGoogleLogin = () => {
+        const apiUrl = import.meta.env.VITE_API_URL;
+        window.location.href = `${apiUrl}/auth/google`;
+      };
+
     return (
         <div className="w-screen min-h-screen flex items-center justify-center  px-4 sm:px-6 lg:px-8">
             <div className="relative py-3 sm:max-w-xs sm:mx-auto">
@@ -49,6 +54,7 @@ const Login = ({switchToForgot,handleLogin}) => {
             <button
               type="button"
               className="mt-3 flex items-center justify-center w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-100"
+              onClick={handleGoogleLogin}
             >
                 <div className=' flex gap-4 items-center '>
               <FcGoogle size={25} />
