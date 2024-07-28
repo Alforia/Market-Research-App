@@ -5,9 +5,10 @@ import Features from '../Components/Features'
 import Footer from '../Components/Footer'
 import GetStarted from '../Components/GetStarted'
 import Hero from '../Components/Hero'
-import Navbar from '../Components/Navbar'
 import Pricing from '../Components/Pricing'
 import Steps from '../Components/Steps'
+import ContactUs from '../Components/ContactUs'
+import Feedback from '../Components/Feedback'
 
 const LandingPage = () => {
   return (
@@ -19,7 +20,8 @@ const LandingPage = () => {
       <GetStarted/>
       <Pricing/>
       <Faq/>
-      <Footer/>
+      {/* <Feedback/> */}
+      <ContactUs/>
     </div>
   )
 }

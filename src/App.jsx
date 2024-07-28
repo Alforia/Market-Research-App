@@ -3,10 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Explore from './Pages/Explore';
 import LoginPage from './Pages/LoginPage';
-import ContactPage from './Pages/ContactPage';
+// import ContactPage from './Pages/ContactPage';
 import Navbar from './Components/Navbar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import TermsPage from './Pages/TermsPage';
+import AboutUsPage from './Pages/AboutUsPage';
+import Footer from './Components/Footer';
+import RefundPolicy from './Pages/RefundPolicy';
+import Payment from './Pages/Payment';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -57,11 +62,17 @@ function App() {
     <Router>
       <Navbar loggedIn={loggedIn} handleLogout={handleLogout} user={user}/>
       <Routes>
-        <Route path='/' element={<LandingPage />} />
-        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />} />
-        <Route path='/explore' element={<Explore />} />
-        <Route path='/contact' element={<ContactPage />} />
+      
+        {/* <Route path='/contact' element={<ContactPage />} /> */}
+        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />}/>
+        <Route path='/explore' element={<Explore/>}/>
+        <Route path='/terms' element={<TermsPage/>}/>
+        <Route path='/aboutus' element={<AboutUsPage/>}/>
+        <Route path='/refund-policies' element={<RefundPolicy/>}/>
+        <Route path='/payment' element={<Payment/>}/>
       </Routes>
+      <Footer/>
     </Router>
   );
 }
