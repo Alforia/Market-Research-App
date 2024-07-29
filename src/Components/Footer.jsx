@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../assets/Logo/Hor-Logo.png'
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
-import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
+import { FaFacebookF, FaLinkedin, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
     return (
@@ -160,6 +160,11 @@ const Footer = () => {
                     <div>
                         <a href="https://www.instagram.com/alforia.ai/">
                         <FaInstagram />
+                        </a>
+                    </div>
+                    <div>
+                        <a href="https://www.linkedin.com/company/alforia-pvt-ltd/">
+                        <FaLinkedin />
                         </a>
                     </div>
                 </div>
