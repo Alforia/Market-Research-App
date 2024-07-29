@@ -24,7 +24,7 @@ const Pricing = () => {
   });
 
   return (
-    <main id='pricing' className="max-w-6xl mx-auto pt-10 pb-8 px-8">
+    <main id='pricing' className="max-w-6xl mx-auto pt-10  px-8 pb-32">
       <div ref={headingRef} className={`max-w-md mx-auto mb-14 text-center transition-transform transform duration-1000 ${headingInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <h1 className="text-4xl font-semibold mb-6 lg:text-5xl"><span className="text-primary">Flexible</span> Plans</h1>
         <p className="text-xl text-gray-500 font-medium">Choose a plan that works best for you and your team.</p>

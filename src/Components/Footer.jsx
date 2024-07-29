@@ -2,12 +2,12 @@ import React from 'react';
 import logo from '../assets/Logo/Hor-Logo.png'
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
-import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
 const Footer = () => {
     return (
         <div id='footer' className=' w-full h-auto py-12 flex flex-col justify-center items-center'>
-            <div className=' flex flex-col gap-5 bg-black rounded-t-[4rem] w-full px-12 py-12'>
+            <div className=' flex flex-col gap-5 bg-black rounded-t-[2.5rem] w-full px-12 py-12'>
                 <h1 className=' text-2xl sm:text-3xl font-bold text-white text-center'>
                     <span className=' text-primary'>30,000+ Users </span>
                     are Transforming Ideas into Business Unicorns
@@ -20,33 +20,33 @@ const Footer = () => {
                     <ul className=' flex gap-5'>
                         <li className=' font-medium cursor-pointer'>
                             <ScrollLink
-                                activeClass="active" 
+                                activeClass="active"
                                 to="hero"
-                                spy={true} 
-                                smooth={true} 
-                                offset={-50} 
+                                spy={true}
+                                smooth={true}
+                                offset={-50}
                             >
                                 Home
                             </ScrollLink>
                         </li>
                         <li className=' font-medium cursor-pointer'>
                             <ScrollLink
-                                activeClass="active" 
+                                activeClass="active"
                                 to="contact"
-                                spy={true} 
-                                smooth={true} 
-                                offset={-50} 
+                                spy={true}
+                                smooth={true}
+                                offset={-50}
                             >
                                 Contact Us
                             </ScrollLink>
                         </li>
                         <li className=' font-medium cursor-pointer'>
                             <ScrollLink
-                                activeClass="active" 
+                                activeClass="active"
                                 to="pricing"
-                                spy={true} 
-                                smooth={true} 
-                                offset={-50} 
+                                spy={true}
+                                smooth={true}
+                                offset={-50}
                             >
                                 Pricing
                             </ScrollLink>
@@ -87,33 +87,33 @@ const Footer = () => {
                 <ul className=' flex flex-col items-center gap-2'>
                     <li className=' font-medium cursor-pointer'>
                         <ScrollLink
-                            activeClass="active" 
+                            activeClass="active"
                             to="hero"
-                            spy={true} 
-                            smooth={true} 
-                            offset={-50} 
+                            spy={true}
+                            smooth={true}
+                            offset={-50}
                         >
                             Home
                         </ScrollLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
                         <ScrollLink
-                            activeClass="active" 
+                            activeClass="active"
                             to="contact"
-                            spy={true} 
-                            smooth={true} 
-                            offset={-50} 
+                            spy={true}
+                            smooth={true}
+                            offset={-50}
                         >
                             Contact Us
                         </ScrollLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
                         <ScrollLink
-                            activeClass="active" 
+                            activeClass="active"
                             to="pricing"
-                            spy={true} 
-                            smooth={true} 
-                            offset={-50} 
+                            spy={true}
+                            smooth={true}
+                            offset={-50}
                         >
                             Pricing
                         </ScrollLink>
@@ -148,13 +148,19 @@ const Footer = () => {
                 </div>
                 <div className=' flex gap-5'>
                     <div>
+                        <a href="https://www.facebook.com/alforiaglobal">
                         <FaFacebookF />
+                        </a>
                     </div>
                     <div>
-                        <FaTwitter />
+                        <a href="https://www.youtube.com/@alforia_ai">
+                        <FaYoutube />
+                        </a>
                     </div>
                     <div>
+                        <a href="https://www.instagram.com/alforia.ai/">
                         <FaInstagram />
+                        </a>
                     </div>
                 </div>
             </div>
