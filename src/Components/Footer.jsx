@@ -1,6 +1,7 @@
-import React from 'react'
-import logo from '../assets/Images/logo.png'
-import { Link } from 'react-scroll';
+import React from 'react';
+import logo from '../assets/Images/logo.png';
+import { Link as ScrollLink } from 'react-scroll';
+import { Link as RouterLink } from 'react-router-dom';
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 
 const Footer = () => {
@@ -18,7 +19,7 @@ const Footer = () => {
                 <div>
                     <ul className=' flex gap-5'>
                         <li className=' font-medium cursor-pointer'>
-                            <Link
+                            <ScrollLink
                                 activeClass="active" 
                                 to="hero"
                                 spy={true} 
@@ -26,10 +27,10 @@ const Footer = () => {
                                 offset={-50} 
                             >
                                 Home
-                            </Link>
+                            </ScrollLink>
                         </li>
                         <li className=' font-medium cursor-pointer'>
-                            <Link
+                            <ScrollLink
                                 activeClass="active" 
                                 to="contact"
                                 spy={true} 
@@ -37,10 +38,10 @@ const Footer = () => {
                                 offset={-50} 
                             >
                                 Contact Us
-                            </Link>
+                            </ScrollLink>
                         </li>
                         <li className=' font-medium cursor-pointer'>
-                            <Link
+                            <ScrollLink
                                 activeClass="active" 
                                 to="pricing"
                                 spy={true} 
@@ -48,7 +49,7 @@ const Footer = () => {
                                 offset={-50} 
                             >
                                 Pricing
-                            </Link>
+                            </ScrollLink>
                         </li>
                     </ul>
                 </div>
@@ -58,29 +59,24 @@ const Footer = () => {
                 <div>
                     <ul className=' flex gap-5'>
                         <li className=' font-medium cursor-pointer'>
-                            <a href='/terms'>
+                            <RouterLink to="/terms">
                                 Terms
-                            </a>
+                            </RouterLink>
                         </li>
                         <li className=' font-medium cursor-pointer'>
-                            <a href='/privacy'>
+                            <RouterLink to="/privacy">
                                 Privacy
-                            </a>
+                            </RouterLink>
                         </li>
                         <li className=' font-medium cursor-pointer'>
-                            <a href='/aboutus'>
+                            <RouterLink to="/aboutus">
                                 About Us
-                            </a>
+                            </RouterLink>
                         </li>
-                        {/* <li className=' font-medium cursor-pointer'>
-                            <a href='/privacy'>
-                                Privacy Policies
-                            </a>
-                        </li> */}
                         <li className=' font-medium cursor-pointer'>
-                            <a href='/refund-policies'>
+                            <RouterLink to="/refund-policies">
                                 Refund Policies
-                            </a>
+                            </RouterLink>
                         </li>
                     </ul>
                 </div>
@@ -90,7 +86,7 @@ const Footer = () => {
                 <img src={logo} alt="logo" className=' h-10 ' />
                 <ul className=' flex flex-col items-center gap-2'>
                     <li className=' font-medium cursor-pointer'>
-                        <Link
+                        <ScrollLink
                             activeClass="active" 
                             to="hero"
                             spy={true} 
@@ -98,10 +94,10 @@ const Footer = () => {
                             offset={-50} 
                         >
                             Home
-                        </Link>
+                        </ScrollLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
-                        <Link
+                        <ScrollLink
                             activeClass="active" 
                             to="contact"
                             spy={true} 
@@ -109,10 +105,10 @@ const Footer = () => {
                             offset={-50} 
                         >
                             Contact Us
-                        </Link>
+                        </ScrollLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
-                        <Link
+                        <ScrollLink
                             activeClass="active" 
                             to="pricing"
                             spy={true} 
@@ -120,32 +116,27 @@ const Footer = () => {
                             offset={-50} 
                         >
                             Pricing
-                        </Link>
+                        </ScrollLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
-                        <a href='/terms'>
-                        Terms
-                        </a>
+                        <RouterLink to="/terms">
+                            Terms
+                        </RouterLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
-                        <a href='/privacy'>
-                        Privacy
-                        </a>
+                        <RouterLink to="/privacy">
+                            Privacy
+                        </RouterLink>
                     </li>
                     <li className=' font-medium cursor-pointer'>
-                        <a href='/aboutus'>
+                        <RouterLink to="/aboutus">
                             About Us
-                        </a>
+                        </RouterLink>
                     </li>
-                    {/* <li className=' font-medium cursor-pointer'>
-                        <a href='/privacy'>
-                            Privacy Policies
-                        </a>
-                    </li> */}
                     <li className=' font-medium cursor-pointer'>
-                        <a href='/refund-policies'>
+                        <RouterLink to="/refund-policies">
                             Refund Policies
-                        </a>
+                        </RouterLink>
                     </li>
                 </ul>
             </div>
