@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/Images/logo.png';
+import logo from '../assets/Logo/Hor-Logo.png'
 import { Link as ScrollLink } from 'react-scroll';
 import { Link as RouterLink } from 'react-router-dom';
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";

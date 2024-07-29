@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from "../assets/Images/logo.png";
+import logo from '../assets/Logo/Hor-Logo.png'
 import { Link } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 import avatar from '../assets/Images/avatar.jpg';
@@ -28,9 +28,9 @@ function Navbar({ loggedIn, handleLogout }) {
 
 
   return (
-    <div className='w-full h-auto flex bg-transparent justify-between items-center px-12 mg:px-32 py-6'>
+    <div className='w-full h-auto flex bg-transparent justify-between items-center px-7 md:px-32 lg:pl-32 py-6'>
       <div className="justify-center items-center">
-        <img src={logo} alt="" className='h-10' />
+        <img src={logo} alt="" className='h-8 md:h-10' />
       </div>
       <div className='flex justify-center items-center gap-5'>
         <div className='hidden sm:block'>
