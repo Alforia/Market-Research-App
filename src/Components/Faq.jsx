@@ -29,7 +29,7 @@ const Faq = () => {
   }
 
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 

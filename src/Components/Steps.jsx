@@ -12,27 +12,27 @@ import line2 from '../assets/Icon/verticalLine2.png';
 
 const Steps = () => {
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: paragraphRef, inView: paragraphInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: step1Ref, inView: step1InView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: step2Ref, inView: step2InView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: step3Ref, inView: step3InView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 

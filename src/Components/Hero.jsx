@@ -11,22 +11,22 @@ function Hero() {
   };
 
   const { ref: imgRef, inView: imgInView } = useInView({
-    triggerOnce: false, // Animation will trigger every time the element comes into view
+    triggerOnce: true, 
     threshold: 0.1,
   });
 
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: paragraphRef, inView: paragraphInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: buttonRef, inView: buttonInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 

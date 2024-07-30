@@ -4,22 +4,22 @@ import { FaRupeeSign } from "react-icons/fa";
 
 const Pricing = () => {
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: starterRef, inView: starterInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: essentialRef, inView: essentialInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: monthlyRef, inView: monthlyInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 

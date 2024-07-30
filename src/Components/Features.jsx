@@ -4,12 +4,12 @@ import img1 from '../assets/Images/featureImg.png';
 
 const Features = () => {
   const { ref: imgRef, inView: imgInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: textRef, inView: textInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 

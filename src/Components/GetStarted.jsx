@@ -11,12 +11,12 @@ const GetStarted = () => {
   };
 
   const { ref: imgRef, inView: imgInView } = useInView({
-    triggerOnce: false, // Animation will trigger every time the element comes into view
+    triggerOnce: true, // Animation will trigger every time the element comes into view
     threshold: 0.1,
   });
 
   const { ref: textRef, inView: textInView } = useInView({
-    triggerOnce: false, // Animation will trigger every time the element comes into view
+    triggerOnce: true, // Animation will trigger every time the element comes into view
     threshold: 0.1,
   });
 

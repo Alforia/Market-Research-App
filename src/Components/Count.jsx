@@ -9,17 +9,17 @@ import playStoreIcon from '../assets/Icon/PlayStore.png';
 
 const Count = () => {
   const { ref: firstRef, inView: firstInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: secondRef, inView: secondInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: thirdRef, inView: thirdInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
