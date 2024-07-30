@@ -29,12 +29,12 @@ const Faq = () => {
   }
 
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <div id='faq' className='w-full h-auto sm:px-40 grid grid-cols-1 lg:grid-cols-2 items-center justify-center gap-2'>
+    <div id='faq' className='w-full h-auto sm:px-40 grid grid-cols-1 lg:grid-cols-2 items-center justify-center gap-2 pb-32'>
       <div ref={headingRef} className={`px-12 sm:px-0 transition-transform transform duration-700 ${headingInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <h1 className='text-4xl lg:text-5xl font-bold'>
           <span className='text-primary'>Frequently </span>

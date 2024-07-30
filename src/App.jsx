@@ -12,6 +12,7 @@ import AboutUsPage from './Pages/AboutUsPage';
 import Footer from './Components/Footer';
 import RefundPolicy from './Pages/RefundPolicy';
 import Payment from './Pages/Payment';
+import PrivacyPolicy from './Pages/PrivacyPolicy';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -70,6 +71,7 @@ function App() {
         <Route path='/terms' element={<TermsPage/>}/>
         <Route path='/aboutus' element={<AboutUsPage/>}/>
         <Route path='/refund-policies' element={<RefundPolicy/>}/>
+        <Route path='/privacy' element={<PrivacyPolicy/>}/>
         <Route path='/payment' element={<Payment/>}/>
       </Routes>
       <Footer/>

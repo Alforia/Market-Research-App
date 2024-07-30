@@ -9,22 +9,22 @@ import playStoreIcon from '../assets/Icon/PlayStore.png';
 
 const Count = () => {
   const { ref: firstRef, inView: firstInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: secondRef, inView: secondInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: thirdRef, inView: thirdInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <div id='count' className='w-full bg-gradient-to-b from-secondary to-white h-auto grid grid-cols-1 lg:grid-cols-3 gap-5 items-center justify-center py-10 px-10 sm:px-40 rounded-t-[4rem]'>
+    <div id='count' className='w-full bg-gradient-to-b from-secondary to-white h-auto grid grid-cols-1 lg:grid-cols-3 gap-5 items-center justify-center py-10 px-10 sm:px-40 rounded-t-[2.5rem] pb-32'>
       <div
         ref={firstRef}
         className={`flex flex-col items-center justify-center transition-transform transform duration-1000 ${

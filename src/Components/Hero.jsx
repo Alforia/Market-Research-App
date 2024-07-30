@@ -11,27 +11,27 @@ function Hero() {
   };
 
   const { ref: imgRef, inView: imgInView } = useInView({
-    triggerOnce: false, // Animation will trigger every time the element comes into view
+    triggerOnce: true, 
     threshold: 0.1,
   });
 
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: paragraphRef, inView: paragraphInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: buttonRef, inView: buttonInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <div id='hero' className='grid lg:grid-cols-2 grid-cols-1-reverse items-center gap-12 md:gap-30 py-20 justify-center px-40 pt-28'>
+    <div id='hero' className='grid lg:grid-cols-2 grid-cols-1-reverse items-center gap-12 md:gap-30 py-20 justify-center px-40 pt-28 pb-36'>
       <div
         ref={imgRef}
         className={`sm:w-[17.125rem] sm:h-[17.125rem] md:w-[19.125rem] md:h-[19.125rem] w-[15.863rem] h-[15.863rem] md:bg-gradient-to-r from-secondary to-white rounded-full right-0 sm:order-2 order-1 bg-transparent lg:ml-44 transition-transform transform duration-1000 ${

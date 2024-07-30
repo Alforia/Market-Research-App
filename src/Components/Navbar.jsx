@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import logo from "../assets/Images/logo.png";
+import logo from '../assets/Logo/Hor-Logo.png';
 import { Link } from 'react-scroll';
 import { useNavigate } from 'react-router-dom';
 import avatar from '../assets/Images/avatar.jpg';
 import Modal from 'react-modal';
 import ProfileModal from './Profile/ProfileModal';
+import { scroller } from 'react-scroll';
 
 function Navbar({ loggedIn, handleLogout, user }) {
   
@@ -30,47 +31,39 @@ function Navbar({ loggedIn, handleLogout, user }) {
 
   // Custom styles for the modal
 
+  const handleScrollNavigation = (section) => {
+    navigate('/');
+    setTimeout(() => {
+      scroller.scrollTo(section, {
+        duration: 800,
+        delay: 0,
+        smooth: 'easeInOutQuart'
+      });
+    }, 100); // delay to ensure page navigation completes
+  };
 
   return (
-    <div className='w-full h-auto flex bg-transparent justify-between items-center px-12 mg:px-32 py-6'>
+    <div className='w-full h-auto flex bg-transparent justify-between items-center px-7 md:px-32 lg:pl-32 py-6'>
       <div className="justify-center items-center">
-        <img src={logo} alt="" className='h-10' />
+        <img src={logo} alt="" className='h-8 md:h-10' />
       </div>
       <div className='flex justify-center items-center gap-5'>
         <div className='hidden sm:block'>
           <ul className='flex gap-5 items-center justify-center font-medium'>
             <li className='font-medium cursor-pointer'>
-              <Link
-                activeClass="active"
-                to="contact"
-                spy={true}
-                smooth={true}
-                offset={-50}
-              >
+              <button onClick={() => handleScrollNavigation('contact')}>
                 Contact Us
-              </Link>
+              </button>
             </li>
             <li className='font-medium cursor-pointer'>
-              <Link
-                activeClass="active"
-                to="pricing"
-                spy={true}
-                smooth={true}
-                offset={-50}
-              >
+              <button onClick={() => handleScrollNavigation('pricing')}>
                 Pricing
-              </Link>
+              </button>
             </li>
             <li className='font-medium cursor-pointer'>
-              <Link
-                activeClass="active"
-                to="faq"
-                spy={true}
-                smooth={true}
-                offset={-50}
-              >
+              <button onClick={() => handleScrollNavigation('faq')}>
                 FAQ
-              </Link>
+              </button>
             </li>
           </ul>
         </div>
@@ -98,7 +91,6 @@ function Navbar({ loggedIn, handleLogout, user }) {
               <ProfileModal ToModalClose={ToModalClose} handleLogout={handleLogout} user={user}/>
             </div>
           </Modal>
-
         </div>
       </div>
     </div>

@@ -76,19 +76,6 @@ const TermsPage = () => {
         Phone: 9778477748<br />
         Address: Alforia Private Limited, WeWork Prestige Atlanta, 80 Feet Rd, Koramangala 1A Block, Koramangala 3 Block, Koramangala, Bengaluru, Karnataka 560034
       </p>
-      <h1 className="text-3xl font-bold mt-10 mb-6">Refund Policy</h1>
-      <p className="mb-4">Last updated: 26-7-2024</p>
-      <p className="mb-4">
-        At Alforia Private Limited, we strive to provide the best market research AI product to our customers. Due to the nature of our product, we do not offer refunds once a purchase is made. However, we do provide the option for customers to downgrade or upgrade their plan to lower or higher tiers as needed.
-      </p>
-      <p className="mb-4">
-        If you have any questions or concerns about our refund policy, please contact us at:
-      </p>
-      <p className="mb-4">
-        Email: <a href="mailto:contact@alforia.ai" className="text-blue-600">contact@alforia.ai</a><br />
-        Phone: 9778477748<br />
-        Address: Alforia Private Limited, WeWork Prestige Atlanta, 80 Feet Rd, Koramangala 1A Block, Koramangala 3 Block, Koramangala, Bengaluru, Karnataka 560034
-      </p>
     </div>
   );
 };

@@ -12,32 +12,32 @@ import line2 from '../assets/Icon/verticalLine2.png';
 
 const Steps = () => {
   const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: paragraphRef, inView: paragraphInView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: step1Ref, inView: step1InView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: step2Ref, inView: step2InView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   const { ref: step3Ref, inView: step3InView } = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
 
   return (
-    <div id='steps' className='w-full bg-gradient-to-b from-secondary to-white h-auto items-center justify-center py-10 px-10 rounded-t-[4rem] flex flex-col gap-16 sm:px-40'>
+    <div id='steps' className='w-full bg-gradient-to-b from-secondary to-white h-auto items-center justify-center py-10 px-10 rounded-t-[2.5rem] flex flex-col gap-16 sm:px-40 pb-32'>
       <div className='flex flex-col gap-5'>
         <h1
           ref={headingRef}

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Feedback = () => {
     return (
-        <div className='w-full bg-gradient-to-b from-secondary to-white h-auto items-center justify-center py-10 px-10 rounded-t-[4rem] flex flex-col gap-16 sm:px-40'>
+        <div className='w-full bg-gradient-to-b from-secondary to-white h-auto items-center justify-center py-10 px-10 rounded-t-[2.5rem] flex flex-col gap-16 sm:px-40'>
             <div>
                 <div className=' text-center flex flex-col gap-4'>
                     <h1
