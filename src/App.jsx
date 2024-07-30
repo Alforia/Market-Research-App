@@ -42,7 +42,7 @@ function App() {
 
   const handleLogin = () => {
     console.log("Logged in");
-    getUser(); 
+    // getUser(); 
   };
 
   const handleLogout = async () => {
@@ -64,9 +64,9 @@ function App() {
       <Routes>
       
         {/* <Route path='/contact' element={<ContactPage />} /> */}
-        <Route path='/' element={<LandingPage/>}/>
+        <Route path='/' element={<LandingPage user={user}/>}/>
         <Route path='/login' element={<LoginPage handleLogin={handleLogin} />}/>
-        <Route path='/explore' element={<Explore/>}/>
+        <Route path='/explore' element={<Explore user={user}/>} />
         <Route path='/terms' element={<TermsPage/>}/>
         <Route path='/aboutus' element={<AboutUsPage/>}/>
         <Route path='/refund-policies' element={<RefundPolicy/>}/>

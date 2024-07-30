@@ -10,7 +10,7 @@ import Steps from '../Components/Steps'
 import ContactUs from '../Components/ContactUs'
 import Feedback from '../Components/Feedback'
 
-const LandingPage = () => {
+const LandingPage = ({ user }) => {
   return (
     <div>
       <Hero/>
@@ -18,7 +18,7 @@ const LandingPage = () => {
       <Features/>
       <Steps/>
       <GetStarted/>
-      <Pricing/>
+      <Pricing user={user}/>
       <Faq/>
       {/* <Feedback/> */}
       <ContactUs/>

@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { FaRupeeSign } from "react-icons/fa";
+import axios from 'axios';
 
-const Pricing = () => {
+const Pricing = ({ user }) => {
+
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentError, setPaymentError] = useState(false);
+
+
   const { ref: headingRef, inView: headingInView } = useInView({
     triggerOnce: false,
     threshold: 0.1,
@@ -23,12 +29,94 @@ const Pricing = () => {
     threshold: 0.1,
   });
 
+  const createOrder = async (amount, currency) => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await axios.post(`${apiUrl}/order`, {
+        keyId: 'rzp_test_9bJLMlD2JKTyol', // Replace with your Razorpay Key ID
+        keySecret: 'F5WikgGIrOpdlLBzBsKUAB9A', // Replace with your Razorpay Key Secret
+        amount,
+        currency,
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('Error creating order. Please try again.');
+    }
+  };
+
+  const handlePayment = async (amount) => {
+
+    if (!user) {
+      window.alert('Please log in to proceed with the payment.');
+      return;
+    }
+
+    const userName = user.displayName;
+    const userEmail = user?.emails?.[0]?.value || user?._json?.email || '';
+
+    const order = await createOrder(amount);
+    if (!order) return;
+
+
+    const userID = user.id;
+    const options = {
+      key: 'rzp_test_9bJLMlD2JKTyol', // Replace with your Razorpay Key ID
+      amount: order.amount,
+      currency: 'INR',
+      name: 'Alforia.ai',
+      description: 'Test Transaction',
+      order_id: order.order_id,
+      handler: (response) => {
+        // Handle payment success
+        console.log(response);
+        const paymentDetails = {
+          razorpay_payment_id: response.razorpay_payment_id,
+          razorpay_order_id: response.razorpay_order_id,
+          razorpay_signature: response.razorpay_signature,
+          userID: userID,
+        };
+        try {
+          const apiUrl = import.meta.env.VITE_API_URL;
+          const verifyResponse = axios.post(`${apiUrl}/payment/verify`, paymentDetails);
+          if (verifyResponse.data.success) {
+            setPaymentSuccess(true);
+            setPaymentError(false);
+          } else {
+            setPaymentSuccess(false);
+            setPaymentError(true);
+          }
+        } catch (error) {
+          console.error('Error verifying payment:', error);
+          setPaymentSuccess(false);
+          setPaymentError(true);
+        }
+      },
+      prefill: {
+        name: userName,
+        email: userEmail,
+        contact: '9999999999'
+      },
+      theme: {
+        color: '#3399cc'
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  };
+
   return (
     <main id='pricing' className="max-w-6xl mx-auto pt-10 pb-8 px-8">
       <div ref={headingRef} className={`max-w-md mx-auto mb-14 text-center transition-transform transform duration-1000 ${headingInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
         <h1 className="text-4xl font-semibold mb-6 lg:text-5xl"><span className="text-primary">Flexible</span> Plans</h1>
         <p className="text-xl text-gray-500 font-medium">Choose a plan that works best for you and your team.</p>
       </div>
+
+      {/* aler make propr */}
+      {paymentSuccess && <p>Payment was successful! Thank you for your purchase.</p>}
+      {paymentError && <p>Payment verification failed. Please try again or contact support.</p>}
+      {/* aler ending  */}
 
       <div className="flex flex-col justify-between items-center lg:flex-row gap-5">
         <div ref={starterRef} className={`w-full flex-1 mt-8 p-8 order-2 bg-white shadow-xl rounded-3xl sm:w-96 lg:w-full lg:order-1 transition-transform transform duration-1000 ${starterInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
@@ -48,7 +136,7 @@ const Pricing = () => {
               <span className="ml-3"><span className="text-black">Upto 2 </span> extra Revisions to update a report.</span>
             </li>
           </ul>
-          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl">
+          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => handlePayment(129)}>
             Choose Plan
             <img src="https://res.cloudinary.com/williamsondesign/arrow-right.svg" className="ml-2" />
           </div>
@@ -74,7 +162,7 @@ const Pricing = () => {
               <span className="ml-3"><span className="text-black">Upto 3 </span> extra Revisions to update a report.</span>
             </li>
           </ul>
-          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl">
+          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => handlePayment(299)}>
             Choose Plan
             <img src="https://res.cloudinary.com/williamsondesign/arrow-right.svg" className="ml-2" />
           </div>
@@ -97,7 +185,7 @@ const Pricing = () => {
               <span className="ml-3">Unused report credits <span className="text-black">rolled over to the next month</span></span>
             </li>
           </ul>
-          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl">
+          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => handlePayment(799)}>
             Choose Plan
             <img src="https://res.cloudinary.com/williamsondesign/arrow-right.svg" className="ml-2" />
           </div>

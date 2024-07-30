@@ -1,0 +1,40 @@
+.report-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.report-title {
+    text-align: center;
+    color: #2945FF;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.report-content {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.report-content h2,
+.report-content h3 {
+    color: #2945FF;
+}
+
+.report-content p {
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.report-content ul {
+    list-style: disc;
+    margin-left: 20px;
+}
+
+.report-content ul li {
+    margin-bottom: 10px;
+}

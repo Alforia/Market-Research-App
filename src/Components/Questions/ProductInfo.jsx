@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import SurveyContext from '../Context/SurveyContext';
 
 const ProductInfo = ({switchToBasic, switchToCompetitor}) => {
+    const { productInfo, setProductInfo } = useContext(SurveyContext);
+    const [productQ1, setProductQ1] = useState(productInfo.productQ1 || '');
+    const [productQ2, setProductQ2] = useState(productInfo.productQ2 || '');
+    const [productQ3, setProductQ3] = useState(productInfo.productQ3 || '');
+    const [productQ4, setProductQ4] = useState(productInfo.productQ4 || '');
+
+    useEffect(() => {
+        setProductInfo({ productQ1, productQ2, productQ3, productQ4 });
+    }, [productQ1, productQ2, productQ3, productQ4, setProductInfo]);
+
   return (
     <div className=' w-11/12 lg:w-auto h-auto flex flex-col gap-6'>
     <div>
@@ -12,28 +23,40 @@ const ProductInfo = ({switchToBasic, switchToCompetitor}) => {
         <label htmlFor="">
         What product or service are you planning to offer or currently offering? 
         </label>
-        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 ' />
+        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 '
+        value={productQ1} 
+        onChange={(e) => setProductQ1(e.target.value)}
+        />
     </div>
 
     <div className=' flex flex-col text-center font-semibold gap-4'>
         <label htmlFor="">
         What makes your product/service unique or different from competitors?
         </label>
-        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 ' />
+        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 '
+        value={productQ2} 
+        onChange={(e) => setProductQ2(e.target.value)}
+        />
     </div>
 
     <div className=' flex flex-col text-center font-semibold gap-4'>
         <label htmlFor="">
         Who is your target audience?
         </label>
-        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 ' />
+        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 '
+        value={productQ3} 
+        onChange={(e) => setProductQ3(e.target.value)}
+        />
     </div>
 
     <div className=' flex flex-col text-center font-semibold gap-4'>
         <label htmlFor="">
         Provide any specific details about your target customers, such as age group or income level.
         </label>
-        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 ' />
+        <input type="text" className=' h-10 border-gray-300 rounded-lg px-5 font-medium focus:border-primary outline-none border-2 '
+        value={productQ4} 
+        onChange={(e) => setProductQ4(e.target.value)}
+        />
     </div>
 
     <div className=" flex justify-between">

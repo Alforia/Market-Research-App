@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SurveyProvider } from '../Components/Context/SurveyContext';
 import BasicInfo from '../Components/Questions/BasicInfo';
 import ProductInfo from '../Components/Questions/ProductInfo';
 import Competitor from '../Components/Questions/Competitor';
@@ -9,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Stepper from 'react-stepper-horizontal';
 import Header from '../Components/Header';
 
-const Explore = () => {
+const Explore = ({ user }) => {
   const [currentComponent, setCurrentComponent] = useState('basicInfo');
 
   const switchToComponent = (component) => {
@@ -45,7 +46,7 @@ const Explore = () => {
   }
 
   return (
-    <>
+    <SurveyProvider>
     {/* <Header/> */}
       {/* <div>
         <IoArrowBackCircleSharp className='absolute md:ml-20 lg:ml-28 mt-11 ml-4 sm:ml-10 text-primary rounded-full shadow-md cursor-pointer hover:text-blue-700' size={38} onClick={handleHome} />
@@ -81,12 +82,12 @@ const Explore = () => {
           }
           {
             currentComponent === 'report' && (
-              <Report />
+              <Report user={user}/>
             )
           }
         </div>
       </div>
-    </>
+    </SurveyProvider>
   );
 }
 
