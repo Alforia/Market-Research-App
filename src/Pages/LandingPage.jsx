@@ -9,6 +9,7 @@ import Pricing from '../Components/Pricing'
 import Steps from '../Components/Steps'
 import ContactUs from '../Components/ContactUs'
 import Feedback from '../Components/Feedback'
+import FooterHead from '../Components/FooterHead'
 
 const LandingPage = ({ user }) => {
   return (
@@ -22,6 +23,7 @@ const LandingPage = ({ user }) => {
       <Faq/>
       {/* <Feedback/> */}
       <ContactUs/>
+      <FooterHead/>
     </div>
   )
 }

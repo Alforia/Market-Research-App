@@ -1,12 +1,13 @@
 import React from 'react';
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../../assets/Logo/styledLogo.png'
 
-const Login = ({switchToForgot,handleLogin}) => {
+const Login = ({ switchToSignin, handleLogin, switchToSignup }) => {
 
-    const navigate = useNavigate ();
+    const navigate = useNavigate();
 
-    const handleLoginClick=()=>{
+    const handleLoginClick = () => {
         handleLogin();
         navigate("/")
     }
@@ -14,56 +15,53 @@ const Login = ({switchToForgot,handleLogin}) => {
     const handleGoogleLogin = () => {
         const apiUrl = import.meta.env.VITE_API_URL;
         window.location.href = `${apiUrl}/auth/google`;
-      };
+    };
 
     return (
         <div className="w-screen min-h-screen flex items-center justify-center  px-4 sm:px-6 lg:px-8">
-            <div className="relative py-3 sm:max-w-xs sm:mx-auto">
-                <div className="min-h-96 px-8 py-6 mt-4 text-left bg-white border-black border rounded-xl shadow-lg">
-                    <div className="flex flex-col justify-center items-center h-full select-none">
-                        <div className="flex flex-col items-center justify-center gap-2 mb-8">
-                            
-                            <h1 className="text-3xl font-bold">
-                                <span className="text-primary">Welcome</span> back
-                            </h1>
-                            <span className="m-0 text-xs max-w-[90%] text-center text-[#8B8E98]">Get started with our app, just start section and enjoy experience.
-                            </span>
-                        </div>
-                        <div className="w-full flex flex-col gap-2">
-                            <label className="font-semibold text-xs text-gray-400 ">Username</label>
-                            <input className="border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 " placeholder="Username" />
-
-                        </div>
-                    </div>
-                    <div className="w-full flex flex-col gap-0">
-                        <label className="font-semibold text-xs text-gray-400 ">Password</label>
-                        <input type="password" className="border rounded-lg px-3 py-2 mb-5 text-sm w-full outline-none dark:border-gray-500 " placeholder="••••••••" />
-                        <div className=' flex items-end justify-end w-full' onClick={switchToForgot}>
-                            <p className=' text-primary text-sm hover:text-blue-700 cursor-pointer' >forgot password?</p>
-                        </div>
-
-                    </div>
-                    <div className="mt-5" onClick={handleLoginClick}>
-                        <button className="py-1 px-8 bg-primary hover:bg-blue-700 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg cursor-pointer select-none">Login</button>
+            <div className="relative py-3 sm:mx-auto">
+                <div className="min-h-96 px-8 py-6 mt-4 text-left bg-white flex flex-col justify-center items-center rounded-xl shadow-lg">
+                    <div>
+                        <img src={logo} className=' h-24' alt="" />
                     </div>
 
-                    <hr className="my-6 border-gray-300 w-full" />
+                    <div>
+                        <h1 className=' text-3xl font-bold text-center mt-6'>
+                        Get your <span className=' text-primary'> Market Research </span> <br/>
+                        in 3 Steps!
+                        </h1>
+                    </div>
 
-          <div className="mt-4 flex flex-col items-center">
-            <p className="text-gray-500">or sign up with</p>
-            <button
-              type="button"
-              className="mt-3 flex items-center justify-center w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-100"
-              onClick={handleGoogleLogin}
-            >
-                <div className=' flex gap-4 items-center '>
-              <FcGoogle size={25} />
-              <span>Sign up with Google</span>
-              </div>
-            </button>
-          </div>
+                    <div className="mt-4 flex flex-col items-center">
+                        <button
+                            type="button"
+                            className="mt-3 flex items-center justify-center w-60 p-3 border border-gray-300 rounded-3xl hover:bg-gray-100"
+                            onClick={handleGoogleLogin}
+                        >
+                            <div className=' flex gap-4 items-center '>
+                                <FcGoogle size={25} />
+                                <span className=' font-semibold '>Sign up with Google</span>
+                            </div>
+                        </button>
+                        <button
+                            type="button"
+                            className="mt-3 flex items-center justify-center w-60 p-3 bg-primary rounded-3xl text-white hover:bg-blue-700"
+                            onClick={switchToSignup}
+                        >
+                            <div className=' flex gap-4 items-center '>
+                                <span className=' font-semibold '>Create Account</span>
+                            </div>
+
+                        </button>
+                    </div>
+                            <div className=' text-center mt-8 '>
+                                <p>By continuing, you agree to the <Link className=' text-primary ' to="/terms"> Terms and Conditions </Link> & <Link className=' text-primary ' to="/privacy"> Privacy policy</Link></p>
+                                <p> Have an Account already?<Link className=' text-primary cursor-pointer' onClick={switchToSignin}> Login </Link> </p>
+                            </div>
                 </div>
             </div>
+
+
         </div>
     );
 };

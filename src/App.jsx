@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Explore from './Pages/Explore';
 import LoginPage from './Pages/LoginPage';
-// import ContactPage from './Pages/ContactPage';
 import Navbar from './Components/Navbar';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -13,11 +12,16 @@ import Footer from './Components/Footer';
 import RefundPolicy from './Pages/RefundPolicy';
 import Payment from './Pages/Payment';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
+import Modal from 'react-modal';
+import ProfileModal from './Components/Modal/ProfileModal';
+import NonMemberAlert from './Components/NonMemberAlert';
+
+Modal.setAppElement('#root'); // Set the app element for accessibility
 
 function App() {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  // const [uservalue, setUservalue] = useState()
+  const [modalOpen, setModalOpen] = useState(false);
 
   const getUser = async () => {
     try {
@@ -43,7 +47,6 @@ function App() {
 
   const handleLogin = () => {
     console.log("Logged in");
-    // getUser(); 
   };
 
   const handleLogout = async () => {
@@ -59,12 +62,24 @@ function App() {
     }
   };
 
+  const ToModalOpen = () => {
+    setModalOpen(true);
+    console.log("opened");
+  };
+
+  const ToModalClose = () => {
+    setModalOpen(false);
+  };
+
   return (
     <Router>
-      <Navbar loggedIn={loggedIn} handleLogout={handleLogout} user={user}/>
+      <Navbar 
+        loggedIn={loggedIn} 
+        handleLogout={handleLogout} 
+        user={user}
+        ToModalOpen={ToModalOpen}
+      />
       <Routes>
-      
-        {/* <Route path='/contact' element={<ContactPage />} /> */}
         <Route path='/' element={<LandingPage user={user}/>}/>
         <Route path='/login' element={<LoginPage handleLogin={handleLogin} />}/>
         <Route path='/explore' element={<Explore user={user}/>} />
@@ -73,8 +88,25 @@ function App() {
         <Route path='/refund-policies' element={<RefundPolicy/>}/>
         <Route path='/privacy' element={<PrivacyPolicy/>}/>
         <Route path='/payment' element={<Payment/>}/>
+        <Route path='/test' element={<NonMemberAlert/>}/>
       </Routes>
       <Footer/>
+
+      <Modal
+        isOpen={modalOpen}
+        onRequestClose={ToModalClose}
+        contentLabel="Profile"
+        overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+        className="fixed inset-0 flex items-center justify-center"
+      >
+        <div className="bg-gray-200 rounded-2xl p-0 w-full max-w-md mx-auto">
+          <ProfileModal 
+            ToModalClose={ToModalClose} 
+            handleLogout={handleLogout} 
+            user={user}
+          />
+        </div>
+      </Modal>
     </Router>
   );
 }

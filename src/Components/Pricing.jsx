@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { FaRupeeSign } from "react-icons/fa";
 import axios from 'axios';
+import Modal from 'react-modal';
+import LoginModal from './Modal/LoginModal';
 
 const Pricing = ({ user }) => {
 
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [paymentError, setPaymentError] = useState(false);
-
+  const [modalOpen, setModalOpen] = useState(false);
 
   const { ref: headingRef, inView: headingInView } = useInView({
     triggerOnce: true,
@@ -29,6 +30,10 @@ const Pricing = ({ user }) => {
     threshold: 0.1,
   });
 
+  const closeModal = () => {
+    setModalOpen(false); // Added closeModal function
+  };
+
   const createOrder = async (amount, currency) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
@@ -48,7 +53,8 @@ const Pricing = ({ user }) => {
   const handlePayment = async (amount) => {
 
     if (!user) {
-      window.alert('Please log in to proceed with the payment.');
+      // window.alert('Please log in to proceed with the payment.');
+      setModalOpen(true);
       return;
     }
 
@@ -191,6 +197,17 @@ const Pricing = ({ user }) => {
           </div>
         </div>
       </div>
+      <Modal 
+        isOpen={modalOpen} // Updated to use modalOpen state
+        onRequestClose={closeModal} // Updated to use closeModal function
+        contentLabel='User Not Logged In'
+        overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+        className="fixed inset-0 flex items-center justify-center"
+      >
+        <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
+          <LoginModal/>
+        </div>
+      </Modal>
     </main>
   );
 }
