@@ -5,7 +5,7 @@ import ProductInfo from '../Components/Questions/ProductInfo';
 import Competitor from '../Components/Questions/Competitor';
 import Report from '../Components/Questions/Report';
 import MeshGradientBackground from '../MeshGradientBackground';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import Stepper from 'react-stepper-horizontal';
 
 const Explore = ({ user }) => {
@@ -61,7 +61,7 @@ const Explore = ({ user }) => {
           defaultBarColor="#bdc3c7"
         />
 
-        <div className='w-full px-10 sm:px-40 mt-10'>
+        <div className='w-full mt-10'>
           {currentComponent === 'basicInfo' && (
             <BasicInfo switchToProductinfo={() => switchToComponent('productInfo')} />
           )}

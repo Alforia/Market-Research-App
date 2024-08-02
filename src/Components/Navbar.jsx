@@ -1,10 +1,12 @@
 import React from 'react';
 import logo from '../assets/Logo/Hor-Logo.png';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import avatar from '../assets/Images/avatar.jpg';
+import { scroller } from 'react-scroll';
 
 function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = () => {
     navigate("/login");
@@ -27,9 +29,14 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
   return (
     <div className='w-full h-auto flex bg-transparent justify-between items-center px-7 md:px-32 lg:pl-32 py-6'>
       <div className="justify-center items-center">
+        <Link to="/">
         <img src={logo} alt="" className='h-8 md:h-10' />
+        </Link>
       </div>
+      
       <div className='flex justify-center items-center gap-5'>
+   
+
         <div className='hidden sm:block'>
           <ul className='flex gap-5 items-center justify-center font-medium'>
             <li className='font-medium cursor-pointer'>
@@ -43,9 +50,17 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
               </button>
             </li>
             <li className='font-medium cursor-pointer'>
-              <button onClick={() => handleScrollNavigation('faq')}>
-                FAQ
+                {
+                  location.pathname === "/explore" ? (
+                    <button onClick={() => handleScrollNavigation('/')}>
+                Home
               </button>
+                  ) : (
+                    <button onClick={() => handleScrollNavigation('faq')}>
+                Faq
+              </button>
+                  )
+                }
             </li>
           </ul>
         </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 const NonMemberAlert = () => {
     return (
-        <div className=' w-full h-60 bg-gradient-to-b from-transparent to-secondary flex justify-center items-center px-12'>
+        <div className=' w-full absolute z-10 top-12 h-60 bg-gradient-to-b from-transparent to-secondary flex justify-center items-center px-12'>
             <div className=' flex justify-center items-center flex-col text-center'>
                 <h1>Market Insight AI made this a subscriber-only Content</h1>
                 <h1 className=' font-bold text-2xl'>Get 20% off membership for a limited time</h1>

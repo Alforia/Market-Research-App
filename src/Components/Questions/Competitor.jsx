@@ -94,7 +94,7 @@ const Competitor = ({ switchToProductinfo, switchToReport }) => {
     console.log('====================================');
 
     return (
-        <div className='w-11/12 lg:w-auto h-auto flex flex-col gap-6'>
+        <div className='w-11/12 lg:w-auto px-10 sm:px-40 h-auto flex flex-col gap-6'>
             <div>
                 <h1 className='text-primary text-3xl font-bold text-center'>Competitor Analysis</h1>
             </div>
@@ -120,7 +120,7 @@ const Competitor = ({ switchToProductinfo, switchToReport }) => {
                     onChange={(e) => setCompetitorQ2(e.target.value)}
                 />
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between w-full">
                 <button className='px-6 sm:px-12 py-3 bg-white text-black font-bold rounded-xl border hover:bg-slate-100' onClick={switchToProductinfo}> 
                     Previous
                 </button>

@@ -13,7 +13,7 @@ const ProductInfo = ({switchToBasic, switchToCompetitor}) => {
     }, [productQ1, productQ2, productQ3, productQ4, setProductInfo]);
 
   return (
-    <div className=' w-11/12 lg:w-auto h-auto flex flex-col gap-6'>
+    <div className=' w-11/12 lg:w-auto px-10 sm:px-40 h-auto flex flex-col gap-6'>
     <div>
         <h1 className=' text-primary text-xl lg:text-3xl font-bold text-center'>Product/Service Information
         & Target Audience</h1>

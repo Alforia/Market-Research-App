@@ -51,6 +51,7 @@ const Faq = () => {
                 <FaChevronCircleDown className={`text-primary transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ""}`} />
               </div>
             </div>
+            <div className=' h-[0.004rem] w-2/3 mx-auto bg-black' />
             {openIndex === index && (
               <div className="bg-white px-12 py-4">
                 <p className='text-xl sm:text-2xl'>{faq.answer}</p>

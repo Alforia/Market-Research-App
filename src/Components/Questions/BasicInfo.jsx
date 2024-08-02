@@ -13,7 +13,7 @@ const BasicInfo = ({switchToProductinfo}) => {
     }, [basicQ1, basicQ2, basicQ3, basicQ4, setBasicInfo]);
 
     return (
-        <div className=' w-11/12 lg:w-auto h-auto flex flex-col gap-6'>
+        <div className=' w-11/12 lg:w-auto px-10 sm:px-40 h-auto flex flex-col gap-6'>
             <div>
                 <h1 className=' text-primary text-3xl font-bold text-center'>Basic Information & Market Details</h1>
             </div>

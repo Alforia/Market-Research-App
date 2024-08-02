@@ -12,11 +12,12 @@ const ContactUs = () => {
         <div className=' flex flex-col items-center justify-center text-[#5A5A5A] gap-2'>
             <h1 className=' text-xl font-semibold'>Market Insight</h1>
             <p className=' text-center'>
-            Mezhukkattil Matrix, MG Road, Chitoor Road
-            Mullassery Canal Junction, Shenoys, <br/> Kochi, Kerala 682011
+            Alforia Private Limited, We Work Atlanta,  <br/> Bangalore, India 
+            560034
             </p>
             <p className=' font-semibold'>
-            Email: contact@marketinsight.com
+            Email: contact@alforia.ai
+
             </p>
         </div>
     </div>

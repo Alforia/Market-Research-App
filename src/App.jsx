@@ -1,5 +1,5 @@
-import './App.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Explore from './Pages/Explore';
 import LoginPage from './Pages/LoginPage';
@@ -14,7 +14,8 @@ import Payment from './Pages/Payment';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import Modal from 'react-modal';
 import ProfileModal from './Components/Modal/ProfileModal';
-import NonMemberAlert from './Components/NonMemberAlert';
+import Test from './Pages/Test';
+import ProtectedRoute from './Components/ProtectedRoute';
 
 Modal.setAppElement('#root'); // Set the app element for accessibility
 
@@ -22,6 +23,13 @@ function App() {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  // const location = useLocation();
+
+  // const currentRoute = ()=>{
+  //   location
+  // }
+
+  // console.log(currentRoute);
 
   const getUser = async () => {
     try {
@@ -78,17 +86,23 @@ function App() {
         handleLogout={handleLogout} 
         user={user}
         ToModalOpen={ToModalOpen}
+        // currentRoute={location.pathname} // Pass the current route
       />
       <Routes>
         <Route path='/' element={<LandingPage user={user}/>}/>
-        <Route path='/login' element={<LoginPage handleLogin={handleLogin} />}/>
+        <Route path='/login' element={
+          <ProtectedRoute loggedIn={loggedIn}>
+
+            <LoginPage handleLogin={handleLogin} />
+          </ProtectedRoute>
+            }/>
         <Route path='/explore' element={<Explore user={user}/>} />
         <Route path='/terms' element={<TermsPage/>}/>
         <Route path='/aboutus' element={<AboutUsPage/>}/>
         <Route path='/refund-policies' element={<RefundPolicy/>}/>
         <Route path='/privacy' element={<PrivacyPolicy/>}/>
         <Route path='/payment' element={<Payment/>}/>
-        <Route path='/test' element={<NonMemberAlert/>}/>
+        <Route path='/test' element={<Test/>}/>
       </Routes>
       <Footer/>
 
