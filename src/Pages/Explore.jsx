@@ -7,6 +7,7 @@ import Report from '../Components/Questions/Report';
 import MeshGradientBackground from '../MeshGradientBackground';
 import {  useNavigate } from 'react-router-dom';
 import Stepper from 'react-stepper-horizontal';
+import Checkbox from '../Components/Questions/CheckBox';
 
 const Explore = ({ user }) => {
   const [currentComponent, setCurrentComponent] = useState('basicInfo');
@@ -25,7 +26,8 @@ const Explore = ({ user }) => {
     { title: 'Basic Info' },
     { title: 'Product Info' },
     { title: 'Competitor' },
-    { title: 'Report' }
+    { title: 'Additional Questions'},
+    { title: 'Report' },
   ];
 
   const getCurrentStep = () => {
@@ -36,8 +38,10 @@ const Explore = ({ user }) => {
         return 1;
       case 'competitor':
         return 2;
+        case 'additional':
+          return 3;
       case 'report':
-        return 3;
+        return 4;
       default:
         return 0;
     }
@@ -69,8 +73,11 @@ const Explore = ({ user }) => {
             <ProductInfo switchToBasic={() => switchToComponent('basicInfo')} switchToCompetitor={() => switchToComponent('competitor')} />
           )}
           {currentComponent === 'competitor' && (
-            <Competitor switchToProductinfo={() => switchToComponent('productInfo')} switchToReport={() => switchToComponent('report')} />
+            <Competitor switchToProductinfo={() => switchToComponent('productInfo')} switchToAdditional={() => switchToComponent('additional')} />
           )}
+            {currentComponent === 'additional' && (
+              <Checkbox switchToReport={() => switchToComponent('report')} switchToCompetitor={() => switchToComponent('competitor')} />
+            )}
           {currentComponent === 'report' && (
             <Report user={user} />
           )}

@@ -80,7 +80,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import SurveyContext from '../Context/SurveyContext';
 
-const Competitor = ({ switchToProductinfo, switchToReport }) => {
+const Competitor = ({ switchToProductinfo, switchToAdditional }) => {
     const { competitorInfo, setCompetitorInfo } = useContext(SurveyContext);
     const [competitorQ1, setCompetitorQ1] = useState(competitorInfo.competitorQ1 || '');
     const [competitorQ2, setCompetitorQ2] = useState(competitorInfo.competitorQ2 || '');
@@ -126,7 +126,7 @@ const Competitor = ({ switchToProductinfo, switchToReport }) => {
                 </button>
                 <button 
                     className='px-6 sm:px-12 py-3 bg-primary hover:bg-blue-700 text-white font-bold rounded-xl' 
-                    onClick={switchToReport}>
+                    onClick={switchToAdditional}>
                     Next
                 </button>
             </div>

@@ -7,7 +7,7 @@ import Signin from '../Components/Login-Signup/Signin';
 import VerifyOtp from '../Components/Login-Signup/VerifyOtp';
 
 const LoginPage = ({handleLogin}) => {
-  const [currentComponent , setCurrentComponent] = useState ("login");
+  const [currentComponent , setCurrentComponent] = useState ("signin");
 
   const switchToLogin =()=>{
     setCurrentComponent('login')

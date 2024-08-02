@@ -24,12 +24,11 @@ const Signin = ({switchToOtp, switchToSignup}) => {
             </div>
 
             <div>
-                <h1 className=' text-3xl font-bold text-center mt-6'>
-                Sign in to your
- <span className=' text-primary'> Market Insight </span> <br/>
- account
-                </h1>
-            </div>
+                        <h1 className=' text-3xl font-bold text-center mt-6'>
+                        Get your <span className=' text-primary'> Market Research </span> <br/>
+                        in 3 Steps!
+                        </h1>
+                    </div>
 
             <div className=' flex flex-col gap-4 mt-6'>
             <input type="text" name="" id="" placeholder='Email' className=' border w-72 h-12 px-7 rounded-lg focus:outline-primary font-semibold ' />
@@ -64,7 +63,7 @@ const Signin = ({switchToOtp, switchToSignup}) => {
                         <span className=' font-semibold '>Sign up with Google</span>
                     </div>
                 </button>
-                <button
+                {/* <button
                     type="button"
                     className="mt-3 flex items-center justify-center w-60 p-3 bg-primary rounded-3xl text-white hover:bg-blue-700"
                     // onClick={switchToSignup}
@@ -73,7 +72,7 @@ const Signin = ({switchToOtp, switchToSignup}) => {
                         <span className=' font-semibold '>Create Account</span>
                     </div>
 
-                </button>
+                </button> */}
             </div>
                     <div className=' text-center mt-8 '>
                         <p>By continuing, you agree to the <Link className=' text-primary ' to="/terms"> Terms and Conditions </Link> & <Link className=' text-primary ' to="/privacy"> Privacy policy</Link></p>
