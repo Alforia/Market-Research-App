@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import avatar from '../assets/Images/avatar.jpg';
 import { scroller } from 'react-scroll';
 
-function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
+function Navbar({ loggedIn,  user, ToModalOpen }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,6 +27,8 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
   };
 
   return (
+    <>
+    
     <div className='w-full h-auto flex bg-transparent justify-between items-center px-7 md:px-32 lg:pl-32 py-6'>
       <div className="justify-center items-center">
         <Link to="/">
@@ -79,6 +81,7 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

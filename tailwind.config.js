@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {
+    //   gridColumn: {
+    //     'span-2': 'span 2 / span 2',
+    //     'span-3': 'span 3 / span 3',
+    //     'span-full': '1 / -1',
+    // },
       colors:{
         primary:"#2945FF",
         secondary:"#FFDCDC",

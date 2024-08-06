@@ -16,21 +16,14 @@ import Modal from 'react-modal';
 import ProfileModal from './Components/Modal/ProfileModal';
 import Test from './Pages/Test';
 import ProtectedRoute from './Components/ProtectedRoute';
+import Dashboard from './Pages/Dashboard';
 
-Modal.setAppElement('#root'); // Set the app element for accessibility
+Modal.setAppElement('#root');
 
 function App() {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  // const location = useLocation();
-
-  // const currentRoute = ()=>{
-  //   location
-  // }
-
-  // console.log(currentRoute);
-
   const getUser = async () => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
@@ -103,6 +96,7 @@ function App() {
         <Route path='/privacy' element={<PrivacyPolicy/>}/>
         <Route path='/payment' element={<Payment/>}/>
         <Route path='/test' element={<Test/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
       <Footer/>
 
