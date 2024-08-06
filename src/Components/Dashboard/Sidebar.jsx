@@ -6,17 +6,6 @@ import React from 'react';
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div className={`bg-gray-200 rounded-r-3xl flex flex-col transition-all duration-300 ${isOpen ? 'w-64' : 'w-0'}`}>
-      {/* <div className='pt-4 px-6 flex justify-between items-center  w-64 cursor-pointer' onClick={toggleSidebar}>
-        <img src={logo} alt="Logo" className={`h-12 ${!isOpen && 'block'}`} />
-        <div className={`${isOpen && 'hidden'}`}>
-
-        <IoMenuSharp size={26} />
-        </div>
-        <button className='focus:outline-none' onClick={toggleSidebar}>
-          {isOpen ? <IoClose size={26}/> : <IoMenuSharp size={26} />}
-        </button>
-      </div> */}
-
       <div className='flex-1 overflow-y-auto mt-4 px-6'>
         
         <div className='flex flex-col gap-0'>
@@ -29,7 +18,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <div className='h-full w-full py-4'>
             <h1 className={`font-semibold text-gray-700 text-sm ${!isOpen && 'hidden'}`}>Yesterday</h1>
             <h1 className={`font-bold text-lg ${!isOpen && 'hidden'}`}>First search history</h1>
-            <h1 className={`font-bold text-lg ${!isOpen && 'hidden'}`}>First search history</h1>
+            <h1 className={`font-bold text- ${!isOpen && 'hidden'}`}>First search history</h1>
             <h1 className={`font-bold text-lg ${!isOpen && 'hidden'}`}>First search history</h1>
             <h1 className={`font-bold text-lg ${!isOpen && 'hidden'}`}>First search history</h1>
             <h1 className={`font-bold text-lg ${!isOpen && 'hidden'}`}>First search history</h1>
@@ -41,7 +30,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <div className='flex items-center justify-evenly px-2 pb-4  gap-2 bottom-0 w-64'>
         <div className={`${!isOpen && 'hidden'}`}>
           {/* <img src={avatar} alt="Avatar" className={`h-12 rounded-full ${!isOpen && 'hidden'}`} /> */}
-          <h1>22/2//2024</h1>
+          <h1>22/2/2024</h1>
         </div>
         <div className={`${!isOpen && 'hidden'}`}>
           <h1 className='font-semibold'>©Market Insights</h1>

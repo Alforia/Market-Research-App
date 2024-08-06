@@ -3,6 +3,8 @@ import Sidebar from '../Components/Dashboard/Sidebar';
 import Datas from '../Components/Data/Data';
 import { IoMenuSharp, IoClose } from "react-icons/io5";
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
+import Lottie from 'lottie-react';
+import crown from '../assets/animations/crown.json';
 
 const Dashboard = () => {
   const [isOpen, setIsOpen] = useState(true);
@@ -28,18 +30,26 @@ const Dashboard = () => {
             {Datas.map((data, index) => (
               <div
                 key={index}
-                className={`bg-gray-200 px-8 py-8 rounded-xl relative ${data.col ? 'col-span-full order-0  bg-red-100 ' : ''}`}
+                className={`bg-gray-200 px-8 py-8 rounded-xl relative ${data.paid ? 'col-span-full order-0  bg-red-100 ' : ''}`}
               >
-                <div className=' relative '>
-                  <h1 className=' text-center text-2xl mb-6 text-primary font-bold '>{data.heading}</h1>
+                <div className=' relative'>
+                  <h1 className=' text-left text-2xl mb-6 text-primary font-bold '>{data.heading}</h1>
+                  {
+                    data.paid && (
+                      <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
+                    )
+                  }
                 </div>
-                <p className={` ${data.col ? 'blur-sm' : ''}`}>{data.result}</p>
+                <p className={` ${data.paid ? 'blur-sm' : ''}`}>{data.result}</p>
                 {
-                  data.col && (
-                    <div className=' w-48 h-24 bg-black opacity-60 absolute inset-0 top-1/2 mx-auto rounded-3xl'>
-                      <h2 className=' text-white px-6 py-6 font-semibold'>
-                        Subscribe to see the results
+                  data.paid && (
+                    <div className=' w-56 h-24 flex justify-center items-center flex-col bg-white opacity-100 absolute inset-0 top-1/2 mx-auto rounded-3xl'>
+                      <h2 className=' text-black px-6 py-2 font-semibold text-sm'>
+                        Subscribe-Only-Content
                       </h2>
+                      <button className=' flex justify-center items-center bg-primary text-white  px-6 py-2 rounded-xl'>
+                        Subscribe
+                      </button>
                     </div>
                   )
                 }
