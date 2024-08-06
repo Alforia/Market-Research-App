@@ -16,11 +16,9 @@ const Dashboard = () => {
   return (
     <div className="flex ">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-      <div className={`flex-1 bg-gray-100 rounded-3xl p-4 transition-all duration-300 ${isOpen ? 'ml-4' : 'mx-4'}`}>
+      <div className={`flex-1 rounded-3xl transition-all duration-300 ${isOpen ? 'ml-4' : 'mx-4'}`}>
         {isOpen ?
-          <div onClick={toggleSidebar}>
-            <IoClose size={26} />
-          </div> :
+          "" :
           <div onClick={toggleSidebar}>
             <IoMenuSharp size={26} />
           </div>
@@ -30,13 +28,14 @@ const Dashboard = () => {
             {Datas.map((data, index) => (
               <div
                 key={index}
-                className={`bg-gray-200 px-8 py-8 rounded-xl relative ${data.paid ? 'col-span-full order-0  bg-red-100 ' : ''}`}
+                className={`bg-gray-100 px-8 py-8 rounded-xl relative ${data.paid ? 'col-span-full order-0  bg-red-100 ' : ''}`}
               >
                 <div className=' relative'>
                   <h1 className=' text-left text-2xl mb-6 text-primary font-bold '>{data.heading}</h1>
+                {/* <div className="" dangerouslySetInnerHTML={{ __html: data.result.replace(/\n/g, '<br/>') }} /> */}
                   {
                     data.paid && (
-                      <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
+                      <Lottie animationData={crown} className={`h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute`}/>
                     )
                   }
                 </div>

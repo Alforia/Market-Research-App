@@ -1,7 +1,7 @@
 const datas = [
     {
     heading:"Executive Summary",
-    result:"Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with:",
+    result:"<b>Key Findings:</b> Tesla remains a dominant player in the electric vehicle (EV) market with significant growth in revenue and deliveries. However, increasing competition and production challenges pose risks.<br><b>Trends:</b> The rise of autonomous driving technology, expansion into new markets, and increased production capacity.<br><b>Opportunities:</b> Growth in EV adoption, advancements in battery technology, and diversification into energy products.<br><b>Threats:</b> Supply chain disruptions, regulatory challenges, and competition from other EV manufacturers.<br><b>Recommendations:</b> Focus on scaling production, enhancing technological capabilities, and expanding market reach.",
     paid:true,
     },
     {
