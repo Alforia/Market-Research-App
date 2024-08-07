@@ -5,7 +5,7 @@ import { IoMenuSharp } from "react-icons/io5";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
-    <div className={`bg-gray-100 flex flex-col transition-all duration-300 ${isOpen ? 'w-64' : 'w-0'}`}>
+    <div className={`bg-gray-100 h-screen fixed top-0 left-0 transition-all z-10 duration-300 ${isOpen ? 'w-64' : 'w-0'} overflow-hidden`}>
       <div className='pt-4 px-6 flex justify-between items-center  w-64 cursor-pointer' onClick={toggleSidebar}>
         {/* <img src={logo} alt="Logo" className={`h-12 ${!isOpen && 'block'}`} /> */}
         {/* <div className={`${isOpen && 'hidden'}`}>
@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
       </div>
 
-      <div className='flex items-center justify-evenly px-2 pb-4  gap-2 bottom-0 w-64'>
+      <div className='flex items-center justify-evenly px-2 pb-4  gap-2 fixed z-10 bg-red-100 py-4 bottom-0 w-64'>
         <div className={`${!isOpen && 'hidden'}`}>
           {/* <img src={avatar} alt="Avatar" className={`h-12 rounded-full ${!isOpen && 'hidden'}`} /> */}
           <h1>22/2//2024</h1>

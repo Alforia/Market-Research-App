@@ -7,19 +7,19 @@ import Lottie from 'lottie-react';
 import crown from '../assets/animations/crown.json';
 
 const Dashboard = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className="flex ">
+    <div className="flex relative px-8 sm:px-20 ">
       <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
-      <div className={`flex-1 rounded-3xl transition-all duration-300 ${isOpen ? 'ml-4' : 'mx-4'}`}>
+      <div className={`flex-1 rounded-3xl transition-all duration-300 ${isOpen ? 'ml-0' : 'ml-0'}`}>
         {isOpen ?
           "" :
-          <div onClick={toggleSidebar}>
+          <div onClick={toggleSidebar} className=' cursor-pointer'>
             <IoMenuSharp size={26} />
           </div>
         }
