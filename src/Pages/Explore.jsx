@@ -8,6 +8,7 @@ import MeshGradientBackground from '../MeshGradientBackground';
 import {  useNavigate } from 'react-router-dom';
 import Stepper from 'react-stepper-horizontal';
 import Checkbox from '../Components/Questions/CheckBox';
+import TipsLoader from '../Components/Questions/TipsLoader';
 
 const Explore = ({ user }) => {
   const [currentComponent, setCurrentComponent] = useState('basicInfo');
@@ -79,7 +80,8 @@ const Explore = ({ user }) => {
               <Checkbox switchToReport={() => switchToComponent('report')} switchToCompetitor={() => switchToComponent('competitor')} />
             )}
           {currentComponent === 'report' && (
-            <Report user={user} />
+            // <Report user={user} />
+            <TipsLoader/>
           )}
         </div>
       </div>
