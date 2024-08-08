@@ -59,7 +59,7 @@ const Pricing = ({ user }) => {
     }
 
     const userName = user.displayName;
-    const userEmail = user?.emails?.[0]?.value || user?._json?.email || '';
+    const userEmail = user?.email;
 
     const order = await createOrder(amount);
     if (!order) return;

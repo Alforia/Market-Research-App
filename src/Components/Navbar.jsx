@@ -12,8 +12,8 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
     navigate("/login");
   };
 
-  const userPhoto = user?.photos?.[0]?.value || user?._json?.picture || avatar;
-  console.log('userPhoto :', userPhoto);
+  const userPhoto = user?.photo || avatar;
+  // console.log('userPhoto :', userPhoto);
 
   const handleScrollNavigation = (section) => {
     navigate('/');

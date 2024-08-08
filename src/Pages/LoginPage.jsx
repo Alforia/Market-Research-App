@@ -6,7 +6,7 @@ import Forgot from '../Components/Login-Signup/Forgot';
 import Signin from '../Components/Login-Signup/Signin';
 import VerifyOtp from '../Components/Login-Signup/VerifyOtp';
 
-const LoginPage = ({handleLogin}) => {
+const LoginPage = ({handleLogin, getUser}) => {
   const [currentComponent , setCurrentComponent] = useState ("signin");
 
   const switchToLogin =()=>{
@@ -56,7 +56,7 @@ const LoginPage = ({handleLogin}) => {
       }
       {
         currentComponent === "otp" && (
-          <VerifyOtp/>
+          <VerifyOtp getUser={getUser} />
         )
       }
     </div>
@@ -64,3 +64,4 @@ const LoginPage = ({handleLogin}) => {
 }
 
 export default LoginPage
+  

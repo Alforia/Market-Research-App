@@ -23,13 +23,6 @@ function App() {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  // const location = useLocation();
-
-  // const currentRoute = ()=>{
-  //   location
-  // }
-
-  // console.log(currentRoute);
 
   const getUser = async () => {
     try {
@@ -39,12 +32,11 @@ function App() {
       if (data.user) {
         setUser(data.user);
         setLoggedIn(true);
-        console.log('User details:', data.user);
       } else {
         setLoggedIn(false);
       }
     } catch (error) {
-      console.log("Login error:", error);
+      console.log("Login error: 121", error);
       setLoggedIn(false);
     }
   };
@@ -86,14 +78,13 @@ function App() {
         handleLogout={handleLogout} 
         user={user}
         ToModalOpen={ToModalOpen}
-        // currentRoute={location.pathname} // Pass the current route
       />
       <Routes>
         <Route path='/' element={<LandingPage user={user}/>}/>
         <Route path='/login' element={
           <ProtectedRoute loggedIn={loggedIn}>
 
-            <LoginPage handleLogin={handleLogin} />
+            <LoginPage handleLogin={handleLogin} getUser={getUser} />
           </ProtectedRoute>
             }/>
         <Route path='/explore' element={<Explore user={user}/>} />

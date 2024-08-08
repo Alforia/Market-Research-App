@@ -9,9 +9,10 @@ const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
         handleLogout();
     };
 
-    const userName = user?.displayName || '';
-    const userEmail = user?.emails?.[0]?.value || user?._json?.email || '';
-    const userPhoto = user?.photos?.[0]?.value || user?._json?.picture || "";
+    const userName = user.name;
+    const userEmail = user.email;
+    const userPhoto = user.photo;
+    // const credit = user.credit ;
 
     return (
         <div className='flex flex-col items-center relative gap-2'>
