@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Explore from './Pages/Explore';
 import LoginPage from './Pages/LoginPage';
@@ -16,8 +16,9 @@ import Modal from 'react-modal';
 import ProfileModal from './Components/Modal/ProfileModal';
 import Test from './Pages/Test';
 import ProtectedRoute from './Components/ProtectedRoute';
+import Dashboard from './Pages/Dashboard';
 
-Modal.setAppElement('#root'); // Set the app element for accessibility
+Modal.setAppElement('#root');
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,6 +31,9 @@ function App() {
       const url = `${apiUrl}/login/success`;
       const { data } = await axios.get(url, { withCredentials: true });
       if (data.user) {
+        console.log('====================================');
+        console.log("user details :",data.user);
+        console.log('====================================');
         setUser(data.user);
         setLoggedIn(true);
       } else {
@@ -94,6 +98,7 @@ function App() {
         <Route path='/privacy' element={<PrivacyPolicy/>}/>
         <Route path='/payment' element={<Payment/>}/>
         <Route path='/test' element={<Test/>}/>
+        <Route path='/dashboard' element={<Dashboard user={user}/>}/>
       </Routes>
       <Footer/>
 

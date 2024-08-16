@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import avatar from '../assets/Images/avatar.jpg';
 import { scroller } from 'react-scroll';
 
-function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
+function Navbar({ loggedIn,  user, ToModalOpen }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -12,7 +12,10 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
     navigate("/login");
   };
 
-  const userPhoto = user?.photo || avatar;
+  const userPhoto = user?.photo|| avatar;
+  // console.log('====================================');
+  // console.log('user:',user);
+  // console.log('====================================');
   // console.log('userPhoto :', userPhoto);
 
   const handleScrollNavigation = (section) => {
@@ -27,6 +30,8 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
   };
 
   return (
+    <>
+    
     <div className='w-full h-auto flex bg-transparent justify-between items-center px-7 md:px-32 lg:pl-32 py-6'>
       <div className="justify-center items-center">
         <Link to="/">
@@ -65,21 +70,24 @@ function Navbar({ loggedIn, handleLogout, user, ToModalOpen }) {
           </ul>
         </div>
         <div>
-          {
-            loggedIn ? (
-              <div className='cursor-pointer' onClick={ToModalOpen}>
-                <img src={userPhoto} alt='Loading...' className='h-9 rounded-full' />
-              </div>
-            ) : (
-              <button className='bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md' onClick={handleLogin}>
-                Sign In
-              </button>
-            )
-          }
+        {
+  loggedIn ? (
+    <div className='cursor-pointer' onClick={ToModalOpen}>
+      <img src={userPhoto} alt='Loading...' className='h-9 rounded-full' />
+    </div>
+  ) : (
+    location.pathname !== "/login" && (
+      <button className='bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md' onClick={handleLogin}>
+        Sign In
+      </button>
+    )
+  )
+}
         </div>
       </div>
     </div>
+    </>
   );
 }
 
-export default Navbar;
+export default Navbar;

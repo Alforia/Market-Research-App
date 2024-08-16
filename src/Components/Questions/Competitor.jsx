@@ -89,9 +89,9 @@ const Competitor = ({ switchToProductinfo, switchToAdditional }) => {
         setCompetitorInfo({ competitorQ1, competitorQ2 });
     }, [competitorQ1, competitorQ2, setCompetitorInfo]);
 
-    console.log('====================================');
-    console.log('answers', competitorQ1, competitorQ2);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log('answers', competitorQ1, competitorQ2);
+    // console.log('====================================');
 
     return (
         <div className='w-11/12 lg:w-auto px-10 sm:px-40 h-auto flex flex-col gap-6'>
