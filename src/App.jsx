@@ -18,6 +18,9 @@ import Test from './Pages/Test';
 import ProtectedRoute from './Components/ProtectedRoute';
 import Dashboard from './Pages/Dashboard';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 Modal.setAppElement('#root');
 
 function App() {
@@ -32,7 +35,7 @@ function App() {
       const { data } = await axios.get(url, { withCredentials: true });
       if (data.user) {
         console.log('====================================');
-        console.log("user details :",data.user);
+        console.log("user details :", data.user);
         console.log('====================================');
         setUser(data.user);
         setLoggedIn(true);
@@ -77,30 +80,45 @@ function App() {
 
   return (
     <Router>
-      <Navbar 
-        loggedIn={loggedIn} 
-        handleLogout={handleLogout} 
+      <Navbar
+        loggedIn={loggedIn}
+        handleLogout={handleLogout}
         user={user}
         ToModalOpen={ToModalOpen}
       />
       <Routes>
-        <Route path='/' element={<LandingPage user={user}/>}/>
+        <Route path='/' element={<LandingPage user={user} />} />
+        {/* Redirect to "/" if logged in and tries to access "/login" */}
         <Route path='/login' element={
-          <ProtectedRoute loggedIn={loggedIn}>
-
+          <ProtectedRoute
+            loggedIn={loggedIn}
+            redirectPathIfLoggedIn="/" // Redirect to home if logged in
+            redirectPathIfNotLoggedIn={null} // Allow access to login if not logged in
+          >
             <LoginPage handleLogin={handleLogin} getUser={getUser} />
           </ProtectedRoute>
-            }/>
-        <Route path='/explore' element={<Explore user={user}/>} />
-        <Route path='/terms' element={<TermsPage/>}/>
-        <Route path='/aboutus' element={<AboutUsPage/>}/>
-        <Route path='/refund-policies' element={<RefundPolicy/>}/>
-        <Route path='/privacy' element={<PrivacyPolicy/>}/>
-        <Route path='/payment' element={<Payment/>}/>
-        <Route path='/test' element={<Test/>}/>
-        <Route path='/dashboard' element={<Dashboard user={user}/>}/>
+        } />
+        <Route path='/explore' element={<Explore user={user} />} />
+        <Route path='/terms' element={<TermsPage />} />
+        <Route path='/aboutus' element={<AboutUsPage />} />
+        <Route path='/refund-policies' element={<RefundPolicy />} />
+        <Route path='/privacy' element={<PrivacyPolicy />} />
+        <Route path='/payment' element={<Payment />} />
+        <Route path='/test' element={<Test />} />
+        {/* Redirect to "/" if not logged in and tries to access "/dashboard" */}
+        {/* <Route path='/dashboard' element={
+          <ProtectedRoute
+            loggedIn={loggedIn}
+            redirectPathIfNotLoggedIn="/" // Redirect to home if not logged in
+            redirectPathIfLoggedIn={null} // Allow access to dashboard if logged in
+          >
+            <Dashboard user={user} />
+          </ProtectedRoute>
+        } /> */}
+        
+        <Route path='/dashboard' element={ <Dashboard user={user} />}/>
       </Routes>
-      <Footer/>
+      <Footer />
 
       <Modal
         isOpen={modalOpen}
@@ -110,13 +128,14 @@ function App() {
         className="fixed inset-0 flex items-center justify-center"
       >
         <div className="bg-gray-200 rounded-2xl p-0 w-full max-w-md mx-auto">
-          <ProfileModal 
-            ToModalClose={ToModalClose} 
-            handleLogout={handleLogout} 
+          <ProfileModal
+            ToModalClose={ToModalClose}
+            handleLogout={handleLogout}
             user={user}
           />
         </div>
       </Modal>
+      <ToastContainer />
     </Router>
   );
 }

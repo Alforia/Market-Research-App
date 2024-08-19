@@ -4,6 +4,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import LoginModal from './Modal/LoginModal';
 
+
 const Pricing = ({ user }) => {
 
   const [paymentSuccess, setPaymentSuccess] = useState(false);

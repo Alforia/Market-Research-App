@@ -8,6 +8,7 @@ import VerifyOtp from '../Components/Login-Signup/VerifyOtp';
 
 const LoginPage = ({handleLogin, getUser}) => {
   const [currentComponent , setCurrentComponent] = useState ("signin");
+  const [email, setEmail] = useState("")
 
   const switchToLogin =()=>{
     setCurrentComponent('login')
@@ -26,7 +27,8 @@ const LoginPage = ({handleLogin, getUser}) => {
   const switchToSignin = ()=>{
     setCurrentComponent("signin")
   }
-  const switchToOtp = ()=>{
+  const switchToOtp = (email)=>{
+    setEmail(email)
     setCurrentComponent("otp")
   }
 
@@ -56,7 +58,7 @@ const LoginPage = ({handleLogin, getUser}) => {
       }
       {
         currentComponent === "otp" && (
-          <VerifyOtp getUser={getUser} />
+          <VerifyOtp getUser={getUser} email={email}  />
         )
       }
     </div>

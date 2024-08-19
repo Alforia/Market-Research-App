@@ -10,7 +10,7 @@ const Checkbox = ({ switchToReport, switchToCompetitor }) => {
 
     const additionalQn = [
         {
-            heading: "Executive Summary",
+            heading: "Summary",
             description: "Information on the market's current size, growth, and important trends.",
             value: '1',
             subscribed: false

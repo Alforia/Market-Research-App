@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from '../assets/Logo/Hor-Logo.png';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import avatar from '../assets/Images/avatar.jpg';
@@ -11,12 +11,19 @@ function Navbar({ loggedIn,  user, ToModalOpen }) {
   const handleLogin = () => {
     navigate("/login");
   };
+  const [userPhoto, setUserPhoto] = useState(avatar);
 
-  const userPhoto = user?.photo|| avatar;
-  // console.log('====================================');
-  // console.log('user:',user);
-  // console.log('====================================');
-  // console.log('userPhoto :', userPhoto);
+  // add useEffect here
+
+  useEffect(() => {
+    
+    if (user && user.photo) {
+      setUserPhoto(user.photo);
+    } else {
+      setUserPhoto(avatar);
+    }
+  }, [user, avatar]); 
+
 
   const handleScrollNavigation = (section) => {
     navigate('/');
@@ -45,9 +52,18 @@ function Navbar({ loggedIn,  user, ToModalOpen }) {
         <div className='hidden sm:block'>
           <ul className='flex gap-5 items-center justify-center font-medium'>
             <li className='font-medium cursor-pointer'>
-              <button onClick={() => handleScrollNavigation('contact')}>
+              {
+                loggedIn ? (
+                  <button onClick={() => navigate('/dashboard')}>
+                history
+              </button>
+                ):(
+                  <button onClick={() => handleScrollNavigation('contact')}>
                 Contact Us
               </button>
+                )
+              }
+              
             </li>
             <li className='font-medium cursor-pointer'>
               <button onClick={() => handleScrollNavigation('pricing')}>

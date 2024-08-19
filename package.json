@@ -28,6 +28,7 @@
     "react-router-dom": "^6.25.1",
     "react-scroll": "^1.9.0",
     "react-stepper-horizontal": "^1.0.11",
+    "react-toastify": "^10.0.5",
     "tw-elements": "^2.0.0"
   },
   "devDependencies": {

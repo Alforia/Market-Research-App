@@ -3,10 +3,13 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/Logo/styledLogo.png'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signin = ({ switchToOtp, switchToSignup }) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('')
+    
 
 
     const handleLoginClick = ({ switchToSignin }) => {
@@ -22,16 +25,19 @@ const Signin = ({ switchToOtp, switchToSignup }) => {
             });
 
             if (response.data.userEmail) {
-                alert("OTP has been sent to your email.");
+                // alert("OTP has been sent to your email.");
                 // Handle OTP sent success
-                switchToOtp();
+                switchToOtp(email);
+                toast.success("OTP has been sent to your email.");
             } else {
-                alert("User not existing.");
+                // alert("User not existing.");
+                toast.error("User not existing.");
                 // Handle user not existing
             }
         } catch (error) {
             console.error("Error sending OTP:", error);
-            alert("An error occurred while sending OTP. Please try again.");
+            // alert("An error occurred while sending OTP. Please try again.");
+            toast.error("An error occurred while sending OTP. Please try again.");
         }
     };
 
@@ -110,7 +116,7 @@ const Signin = ({ switchToOtp, switchToSignup }) => {
                 </div>
             </div>
 
-
+            
         </div>
     )
 }

@@ -4,6 +4,7 @@ import reportLottie from '../../assets/animations/reportGenareted.json'; // Corr
 import { useNavigate } from 'react-router-dom';
 import TipsLoader from './TipsLoader';
 import SurveyContext from '../Context/SurveyContext';
+import LoginModal from '../Modal/LoginModal';
 
 const Report = ({ user }) => {
     const userId = user?.userID; // Optional chaining to handle cases where user might be null or undefined
@@ -69,7 +70,7 @@ const Report = ({ user }) => {
     }, [navigate, resetSurvey, userId]); // Dependency array includes userId instead of user
 
     if (!userId) {
-        return <div>Please log in to generate the report.</div>;
+        return <LoginModal/>;
     }
 
     if (loading) {

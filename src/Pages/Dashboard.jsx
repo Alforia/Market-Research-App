@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Components/Dashboard/Sidebar';
 import { IoMenuSharp } from "react-icons/io5";
+import { FaCrown } from "react-icons/fa6";
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import Lottie from 'lottie-react';
 import crown from '../assets/animations/crown.json';
@@ -28,11 +29,14 @@ const Dashboard = ({ user }) => {
   const [chartData, setChartData] = useState({});
   const [history, setHistory] = useState({});
 
+  console.log('user values in dashboard', user);
+
+
   const location = useLocation();
   const { reportData } = location.state || {}; // Retrieve data from location state
 
   console.log('====================================');
-  console.log('history in dashboard :',history);
+  console.log('history in dashboard :', history);
   console.log('====================================');
 
 
@@ -40,25 +44,25 @@ const Dashboard = ({ user }) => {
     try {
       // Remove markdown code block markers
       const jsonString = data.replace(/```json\n|\n```/g, '');
-      
+
       // Log the cleaned JSON string for debugging
       console.log('Cleaned JSON String:', jsonString);
-      
+
       // Parse the JSON
       const parsedData = JSON.parse(jsonString);
-      
+
       if (!parsedData.Report || !parsedData.Charts) {
         throw new Error('Invalid JSON structure: Missing "Report" or "Charts"');
       }
-      
+
       // Extract and set state variables
       const marketOverview = parsedData.Report || parsedData.report;
       const chartsData = parsedData.Charts || parsedData.charts;
-      
+
       // Update state
       setReports(marketOverview);
       setChartData(chartsData);
-      
+
       console.log('Parsed Data:', parsedData);
     } catch (error) {
       console.error('Error parsing data:', error);
@@ -66,11 +70,11 @@ const Dashboard = ({ user }) => {
       console.error('Problematic JSON String:', data);
     }
   };
-  
+
 
   useEffect(() => {
     let data;
-    
+
     if (history && history.response) {
       data = history.response;
     } else if (reportData && reportData.response) {
@@ -79,11 +83,11 @@ const Dashboard = ({ user }) => {
     if (data) {
       parseAndSetData(data, setReports, setChartData);
     }
-  
+
   }, [history, reportData, setReports, setChartData]);
 
   const fixedHeadings = [
-    'Executive Summary',
+    'Summary',
     'Industry Overview',
     'Market Dynamics',
     'Competitive Landscape',
@@ -259,23 +263,34 @@ const Dashboard = ({ user }) => {
             <IoMenuSharp size={26} />
           </div>
         )}
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 3 }}>
+        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 2 }}>
           <Masonry gutter="16px" className='pt-4 px-2'>
             {fixedHeadings.map((heading, index) => (
               reports[heading] && reports[heading] !== "Content not available" ? (
                 <div
                   key={index}
-                  className={`bg-gray-100 px-8 py-8 rounded-xl relative ${heading === 'Market Dynamics' ? 'bg-red-100' : ''}`}
+                  className={`bg-gray-100 px-8 py-8 rounded-xl relative ${
+                    ['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading) 
+                      ? 'bg-red-100' 
+                      : ''
+                  }`}
                 >
                   <div className='relative'>
                     <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{heading}</h1>
+                  {(heading === 'Market Segmentation' ||
+                    heading === 'Competitive Landscape' ||
+                    heading === 'SWOT Analysis' ||
+                    heading === 'Consumer Insights' ||
+                    heading === 'Technological Trends' ||
+                    heading === 'Regulatory Environment' ||
+                    heading === 'All Graphs') && (
+                      <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
+                      // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
+                    )}
                   </div>
                   <div
                     dangerouslySetInnerHTML={{ __html: reports[heading] }}
                   />
-                  {heading === 'Market Segmentation' && (
-                    <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
-                  )}
                 </div>
               ) : null
             ))}

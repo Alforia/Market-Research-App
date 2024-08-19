@@ -27,8 +27,8 @@ const Login = ({ switchToSignin, handleLogin, switchToSignup }) => {
 
                     <div>
                         <h1 className=' text-3xl font-bold text-center mt-6'>
-                        Get your <span className=' text-primary'> Market Research </span> <br/>
-                        in 3 Steps!
+                            Get your <span className=' text-primary'> Market Research </span> <br />
+                            in 3 Steps!
                         </h1>
                     </div>
 
@@ -54,10 +54,10 @@ const Login = ({ switchToSignin, handleLogin, switchToSignup }) => {
 
                         </button>
                     </div>
-                            <div className=' text-center mt-8 '>
-                                <p>By continuing, you agree to the <Link className=' text-primary ' to="/terms"> Terms and Conditions </Link> & <Link className=' text-primary ' to="/privacy"> Privacy policy</Link></p>
-                                <p> Have an Account already?<Link className=' text-primary cursor-pointer' onClick={switchToSignin}> Login </Link> </p>
-                            </div>
+                    <div className=' text-center mt-8 '>
+                        <p>By continuing, you agree to the <Link className=' text-primary ' to="/terms"> Terms and Conditions </Link> & <Link className=' text-primary ' to="/privacy"> Privacy policy</Link></p>
+                        <p> Have an Account already?<Link className=' text-primary cursor-pointer' onClick={switchToSignin}> Login </Link> </p>
+                    </div>
                 </div>
             </div>
 
