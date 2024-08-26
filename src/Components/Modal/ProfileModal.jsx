@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoClose } from "react-icons/io5";
 import Lottie from 'lottie-react';
 import crown from '../../assets/animations/crown.json';
+import avatar from '../../assets/Images/avatar.jpg'
 
 const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
     const logoutClick = () => {
@@ -9,11 +10,21 @@ const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
         handleLogout();
     };
 
+    const [userPhoto, setUserPhoto] = useState ();
+
+    useEffect(()=>{
+        if(user && user.photo){
+            setUserPhoto(user.photo)
+            console.log("user image : ", user.photo);
+        }else{
+            setUserPhoto(avatar)
+        }
+    },[user, avatar]);
+
     const userName = user.name;
     const userEmail = user.email;
-    const userPhoto = user.photo;
+    // const userPhoto = user.photo;
     // const credit = user.credit ;
-
     return (
         <div className='flex flex-col items-center relative gap-2'>
             <div className='cursor-pointer' onClick={ToModalClose}>

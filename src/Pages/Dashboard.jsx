@@ -259,7 +259,7 @@ const Dashboard = ({ user }) => {
       />
       <div className={`flex-1 rounded-3xl transition-all duration-300 ${isOpen ? 'ml-0' : 'ml-0'}`}>
         {!isOpen && (
-          <div onClick={toggleSidebar} className='cursor-pointer'>
+          <div onClick={toggleSidebar} className='cursor-pointer w-8 flex justify-center '>
             <IoMenuSharp size={26} />
           </div>
         )}

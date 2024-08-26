@@ -7,18 +7,18 @@ import { scroller } from 'react-scroll';
 function Navbar({ loggedIn,  user, ToModalOpen }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [userPhoto, setUserPhoto] = useState();
 
   const handleLogin = () => {
     navigate("/login");
   };
-  const [userPhoto, setUserPhoto] = useState(avatar);
-
-  // add useEffect here
 
   useEffect(() => {
     
     if (user && user.photo) {
       setUserPhoto(user.photo);
+      console.log('user profile pics :',user.photo);
+      
     } else {
       setUserPhoto(avatar);
     }
@@ -55,7 +55,7 @@ function Navbar({ loggedIn,  user, ToModalOpen }) {
               {
                 loggedIn ? (
                   <button onClick={() => navigate('/dashboard')}>
-                history
+                History
               </button>
                 ):(
                   <button onClick={() => handleScrollNavigation('contact')}>

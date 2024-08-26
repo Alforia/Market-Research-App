@@ -37,6 +37,8 @@ function App() {
         console.log('====================================');
         console.log("user details :", data.user);
         console.log('====================================');
+        console.log("user photo : ", data.photo);
+        
         setUser(data.user);
         setLoggedIn(true);
       } else {
@@ -71,7 +73,7 @@ function App() {
 
   const ToModalOpen = () => {
     setModalOpen(true);
-    console.log("opened");
+    // console.log("opened");
   };
 
   const ToModalClose = () => {
@@ -92,8 +94,6 @@ function App() {
         <Route path='/login' element={
           <ProtectedRoute
             loggedIn={loggedIn}
-            redirectPathIfLoggedIn="/" // Redirect to home if logged in
-            redirectPathIfNotLoggedIn={null} // Allow access to login if not logged in
           >
             <LoginPage handleLogin={handleLogin} getUser={getUser} />
           </ProtectedRoute>
@@ -105,16 +105,7 @@ function App() {
         <Route path='/privacy' element={<PrivacyPolicy />} />
         <Route path='/payment' element={<Payment />} />
         <Route path='/test' element={<Test />} />
-        {/* Redirect to "/" if not logged in and tries to access "/dashboard" */}
-        {/* <Route path='/dashboard' element={
-          <ProtectedRoute
-            loggedIn={loggedIn}
-            redirectPathIfNotLoggedIn="/" // Redirect to home if not logged in
-            redirectPathIfLoggedIn={null} // Allow access to dashboard if logged in
-          >
-            <Dashboard user={user} />
-          </ProtectedRoute>
-        } /> */}
+        
         
         <Route path='/dashboard' element={ <Dashboard user={user} />}/>
       </Routes>
