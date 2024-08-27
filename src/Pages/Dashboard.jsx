@@ -8,6 +8,8 @@ import crown from '../assets/animations/crown.json';
 import { useLocation } from 'react-router-dom';
 import { Bar, Line, Pie, Doughnut, Bubble, PolarArea, Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, BarElement, PointElement, ArcElement, CategoryScale, LinearScale, Filler } from 'chart.js';
+import DownloadButton from '../Components/DownloadButton';
+import ReButton from '../Components/ReButton';
 
 // Register Chart.js components
 ChartJS.register(
@@ -269,9 +271,9 @@ const Dashboard = ({ user }) => {
               reports[heading] && reports[heading] !== "Content not available" ? (
                 <div
                   key={index}
-                  className={`bg-gray-100 px-8 py-8 rounded-xl relative ${
+                  className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${
                     ['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading) 
-                      ? 'bg-red-100' 
+                      ? ' bg-slate-200' 
                       : ''
                   }`}
                 >
@@ -309,6 +311,10 @@ const Dashboard = ({ user }) => {
 
           </Masonry>
         </ResponsiveMasonry>
+        <div className=' flex justify-center gap-10 py-12'>
+        <DownloadButton/>
+        <ReButton/>
+        </div>
       </div>
     </div>
   );
