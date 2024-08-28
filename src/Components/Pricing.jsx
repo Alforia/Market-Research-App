@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import Modal from 'react-modal';
 import LoginModal from './Modal/LoginModal';
+import logo from '../assets/Logo/Hor-Logo.png';
 
 
 const Pricing = ({ user }) => {
@@ -10,40 +11,52 @@ const Pricing = ({ user }) => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [paymentError, setPaymentError] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpenDetails, setModalOpenDetails] = useState(false);
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [amount, setAmount] = useState();
+  const [orderError, setOrderError] = useState('');
 
-  const { ref: headingRef, inView: headingInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  useEffect(() => {
+    if (user) {
+      setName(user.name || '');
+      setEmail(user.email || '');
+    }
+  }, [user]);
 
-  const { ref: starterRef, inView: starterInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  // Intersection Observer hooks
+  const { ref: headingRef, inView: headingInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: starterRef, inView: starterInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: essentialRef, inView: essentialInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+  const { ref: monthlyRef, inView: monthlyInView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const { ref: essentialRef, inView: essentialInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
 
-  const { ref: monthlyRef, inView: monthlyInView } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
 
+  
+    // Open modal for user details
+    const openUserDetails = (selectedAmount) => {
+      if (!user) {
+        // window.alert('Please log in to proceed with the payment.');
+        setModalOpen(true);
+        return;
+      } 
+      setAmount(selectedAmount);
+      setModalOpenDetails(true);
+    };
+
+
+  // Close all modals
   const closeModal = () => {
-    setModalOpen(false); // Added closeModal function
+    setModalOpen(false);
+    setModalOpenDetails(false);
   };
 
   const createOrder = async (amount, currency) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.post(`${apiUrl}/order`, {
-        keyId: 'rzp_test_9bJLMlD2JKTyol', // Replace with your Razorpay Key ID
-        keySecret: 'F5WikgGIrOpdlLBzBsKUAB9A', // Replace with your Razorpay Key Secret
-        amount,
-        currency,
-      });
+
+      const response = await axios.post(`${apiUrl}order`, { amount, currency});
       return response.data;
     } catch (error) {
       console.error('Error creating order:', error);
@@ -51,41 +64,45 @@ const Pricing = ({ user }) => {
     }
   };
 
-  const handlePayment = async (amount) => {
 
-    if (!user) {
-      // window.alert('Please log in to proceed with the payment.');
-      setModalOpen(true);
-      return;
-    }
+const validateInput = (phone, email) => {
+  const phoneRegex = /^[6-9]\d{9}$/;  // Adjust regex as per your requirements
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return phoneRegex.test(phone) && emailRegex.test(email);
+};
 
-    const userName = user.displayName;
-    const userEmail = user?.email;
+  const handlePayment = async (phone, email, name) => {
+
+console.log('handlePayment :',email, name, phone);
 
     const order = await createOrder(amount);
+    console.log('order : ',order);
+    
     if (!order) return;
 
-
-    const userID = user.id;
+    const userID = user.userID;
+    const RAZORPAY_KEY_ID = import.meta.env.RAZORPAY_KEY_ID;
     const options = {
-      key: 'rzp_test_9bJLMlD2JKTyol', // Replace with your Razorpay Key ID
+      key: RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: 'INR',
       name: 'Alforia.ai',
       description: 'Test Transaction',
+      image: logo,
       order_id: order.order_id,
       handler: (response) => {
         // Handle payment success
-        console.log(response);
+        
         const paymentDetails = {
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_order_id: response.razorpay_order_id,
           razorpay_signature: response.razorpay_signature,
           userID: userID,
+          amount: order.amount,
         };
         try {
           const apiUrl = import.meta.env.VITE_API_URL;
-          const verifyResponse = axios.post(`${apiUrl}/payment/verify`, paymentDetails);
+          const verifyResponse = axios.post(`${apiUrl}payment/verify`, paymentDetails);
           if (verifyResponse.data.success) {
             setPaymentSuccess(true);
             setPaymentError(false);
@@ -99,10 +116,10 @@ const Pricing = ({ user }) => {
           setPaymentError(true);
         }
       },
-      prefill: {
-        name: userName,
-        email: userEmail,
-        contact: '9999999999'
+      prefill: { 
+        name: name,
+        email: email,
+        contact: phone,
       },
       theme: {
         color: '#3399cc'
@@ -143,7 +160,7 @@ const Pricing = ({ user }) => {
               <span className="ml-3"><span className="text-black">Upto 2 </span> extra Revisions to update a report.</span>
             </li>
           </ul>
-          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => handlePayment(129)}>
+          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => openUserDetails(129)}>
             Choose Plan
             <img src="https://res.cloudinary.com/williamsondesign/arrow-right.svg" className="ml-2" />
           </div>
@@ -169,7 +186,7 @@ const Pricing = ({ user }) => {
               <span className="ml-3"><span className="text-black">Upto 3 </span> extra Revisions to update a report.</span>
             </li>
           </ul>
-          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => handlePayment(299)}>
+          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => openUserDetails(299)}>
             Choose Plan
             <img src="https://res.cloudinary.com/williamsondesign/arrow-right.svg" className="ml-2" />
           </div>
@@ -192,12 +209,58 @@ const Pricing = ({ user }) => {
               <span className="ml-3">Unused report credits <span className="text-black">rolled over to the next month</span></span>
             </li>
           </ul>
-          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => handlePayment(799)}>
+          <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => openUserDetails(799)}>
             Choose Plan
             <img src="https://res.cloudinary.com/williamsondesign/arrow-right.svg" className="ml-2" />
           </div>
         </div>
       </div>
+      {modalOpenDetails && (
+  
+  <Modal 
+        isOpen={modalOpenDetails} // Updated to use modalOpen state
+        onRequestClose={closeModal} // Updated to use closeModal function
+        // contentLabel='User Not Logged In'
+        overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+        className="fixed inset-0 flex items-center justify-center"
+      >
+        <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
+          {/* <LoginModal/> */}
+          <div className="modal">
+    <div className="modal-content">
+      <h2>Enter Your Details</h2>
+      <input 
+        type="name" 
+        placeholder="Name" 
+        value={name} 
+        onChange={(e) => setName(e.target.value)} 
+      />
+      <input 
+        type="text" 
+        placeholder="Phone Number" 
+        value={phone} 
+        onChange={(e) => setPhone(e.target.value)} 
+      />
+      <input 
+        type="email" 
+        placeholder="Email" 
+        value={email} 
+        onChange={(e) => setEmail(e.target.value)} 
+      />
+      <button onClick={() => {
+        if (validateInput(phone, email)) {
+          setModalOpenDetails(false);
+          handlePayment(phone, email, name);
+        } else {
+          alert('Please enter valid details');
+        }
+      }}>Proceed to Pay</button>
+    </div>
+  </div>
+        </div>
+      </Modal>
+)}
+
       <Modal 
         isOpen={modalOpen} // Updated to use modalOpen state
         onRequestClose={closeModal} // Updated to use closeModal function

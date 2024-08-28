@@ -31,7 +31,7 @@ function App() {
   const getUser = async () => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      const url = `${apiUrl}/login/success`;
+      const url = `${apiUrl}login/success`;
       const { data } = await axios.get(url, { withCredentials: true });
       if (data.user) {
         console.log('====================================');
