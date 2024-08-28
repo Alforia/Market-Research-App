@@ -130,7 +130,7 @@ const Sidebar = ({ isOpen, toggleSidebar, onSelectHistory, user }) => {
                       {new Date(item.createdAt).toLocaleString()}
                     </p>
                     <div className="pl-4 hover:bg-gray-200 rounded-lg py-1 cursor-pointer">
-                      <h1 className="font-bold text-lg">{item.history}</h1>
+                      <h1 className="font-bold line-clamp-2 text-lg">{item.history}</h1>
                     </div>
                   </div>
                 ))

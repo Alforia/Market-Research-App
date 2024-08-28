@@ -37,7 +37,7 @@ const Steps = () => {
   });
 
   return (
-    <div id='steps' className='w-full bg-gradient-to-b from-secondary to-white h-auto items-center justify-center py-10 px-10 rounded-t-[2.5rem] flex flex-col gap-16 sm:px-40 pb-32'>
+    <div id='steps' className='w-full bg-gradient-to-b from-secondary to-white h-auto 2xl:px-96 items-center justify-center py-10 px-10 rounded-t-[2.5rem] flex flex-col gap-16 sm:px-40 pb-32'>
       <div className='flex flex-col gap-5'>
         <h1
           ref={headingRef}

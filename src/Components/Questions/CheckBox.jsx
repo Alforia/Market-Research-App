@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 import { useInView } from 'react-intersection-observer';
 import Lottie from 'lottie-react';
 import crown from '../../assets/animations/crown.json';
-import SurveyContext from '../Context/SurveyContext'
+import SurveyContext from '../Context/SurveyContext';
 
 const Checkbox = ({ switchToReport, switchToCompetitor }) => {
     const { selectedValues, toggleSelection } = useContext(SurveyContext);
@@ -78,15 +78,39 @@ const Checkbox = ({ switchToReport, switchToCompetitor }) => {
         // },
     ];
 
+
     const [openIndex, setOpenIndex] = useState(null);
+    const [selectAll, setSelectAll] = useState(false);
+
+    useEffect(() => {
+        // Set `selectAll` based on whether all checkboxes are selected
+        setSelectAll(additionalQn.every(question => selectedValues.includes(question.value)));
+    }, [selectedValues]);
 
     const handleCheckboxChange = (value) => {
-        toggleSelection(value); // Use the context's toggle function
-    }
+        toggleSelection(value);
+    };
 
     const toggleOpen = (index) => {
         setOpenIndex(openIndex === index ? null : index);
-    }
+    };
+
+    const handleSelectAllChange = () => {
+        if (selectAll) {
+            additionalQn.forEach(question => {
+                if (selectedValues.includes(question.value)) {
+                    toggleSelection(question.value);
+                }
+            });
+        } else {
+            additionalQn.forEach(question => {
+                if (!selectedValues.includes(question.value)) {
+                    toggleSelection(question.value);
+                }
+            });
+        }
+        setSelectAll(!selectAll);
+    };
 
     const { ref: headingRef, inView: headingInView } = useInView({
         triggerOnce: true,
@@ -95,51 +119,43 @@ const Checkbox = ({ switchToReport, switchToCompetitor }) => {
 
     return (
         <div id='additionalQn' className='w-full h-auto sm:px-40 grid grid-cols-1 lg:grid-cols-1 items-center justify-center gap-4 pb-32 '>
-            <div className=' px-12'>
+            <div className='px-12'>
                 <h1 className='text-primary text-3xl font-bold text-center'>Select the data you wanted</h1>
+                <div className="select-all flex items-center justify-end">
+                    <input
+                        type="checkbox"
+                        checked={selectAll}
+                        onChange={handleSelectAllChange}
+                        className='h-5 w-5 mr-2'
+                    />
+                    <label>Select All</label>
+                </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-4 px-6">
                 {additionalQn.map((question, index) => (
                     <div key={index} className="question">
-                        <div
-
-                            style={{ cursor: 'pointer' }}
-                            className={`flex justify-between px-12 items-center font-bold py-4 rounded-xl relative gap-4 ${openIndex === index ? " rounded-b-none" : ""} mt-4 bg-[#E8E8E8] ${index === 0 ? 'rounded-t-xl' : ''} ${index === additionalQn.length - 1 ? 'rounded-b-xl' : ''}`}>
-                            {/* <input type="checkbox"
-                                id={`question${index}`}
-                                className=' h-5 w-5'
-                                value={question.value} 
-                                // checked={selectedValues.includes(`question${index}`)} // Check if this radio is selected
-                                checked={selectedValues.includes(question.value)}
-                                // onChange={() => handleRadioChange(index)}
-                                onChange={() => handleCheckboxChange(question.value)} // Handle change event
-                            /> */}
-
+                        <div style={{ cursor: 'pointer' }} className={`flex justify-between px-12 items-center font-bold py-4 rounded-xl relative gap-4 ${openIndex === index ? "rounded-b-none" : ""} mt-4 bg-[#E8E8E8] ${index === 0 ? 'rounded-t-xl' : ''} ${index === additionalQn.length - 1 ? 'rounded-b-xl' : ''}`}>
                             <input
-                                type="checkbox"  // Changed to checkbox
+                                type="checkbox"
                                 id={`question${index}`}
-                                value={question.value} // Use value from the question object
-                                checked={selectedValues.includes(question.value)} // Check if this checkbox is selected
-                                onChange={() => handleCheckboxChange(question.value)} // Update state on change
+                                value={question.value}
+                                checked={selectedValues.includes(question.value)}
+                                onChange={() => handleCheckboxChange(question.value)}
                                 className='h-5 w-5'
                             />
 
-                            <div className="flex justify-between w-full items-center " onClick={() => toggleOpen(index)} >
-                                <h1 className=' text-md'>{question.heading}</h1>
-                                <div className=' flex items-center relative'>
-                                    <div className=' w-12 h-12'></div>
-                                    {
-                                        question.subscribed && <Lottie animationData={crown} className='h-12 w-12 absolute  top-0  ' />
-                                    }
-
-
-                                    <IoIosArrowDown size={20} className={` text-primary transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ""}`} />
+                            <div className="flex justify-between w-full items-center" onClick={() => toggleOpen(index)}>
+                                <h1 className='text-md'>{question.heading}</h1>
+                                <div className='flex items-center relative'>
+                                    <div className='w-12 h-12'></div>
+                                    {question.subscribed && <Lottie animationData={crown} className='h-12 w-12 absolute top-0' />}
+                                    <IoIosArrowDown size={20} className={`text-primary transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ""}`} />
                                 </div>
                             </div>
                         </div>
                         {openIndex === index && (
                             <div className="bg-[#F9F9F9] px-12 rounded-b-2xl py-4">
-                                <p className='text-xl sm:text-xl'> {question.description} </p>
+                                <p className='text-xl sm:text-xl'>{question.description}</p>
                             </div>
                         )}
                     </div>
