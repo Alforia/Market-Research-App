@@ -3,19 +3,43 @@ import { IoClose } from "react-icons/io5";
 import Lottie from 'lottie-react';
 import crown from '../../assets/animations/crown.json';
 import avatar from '../../assets/Images/avatar.jpg'
+import axios from 'axios';
 
 const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
+    const [plans, setPlans] = useState({ currentPlan: 'Loading...', credit: 'Loading...' });
+
+
     const logoutClick = () => {
         ToModalClose();
         handleLogout();
     };
+
+    const profileUpdated = async () => {
+        try {
+          const apiUrl = import.meta.env.VITE_API_URL; 
+          const url = `${apiUrl}profile/updated`;
+          const userID = user.userID; 
+          const { data } = await axios.post(url, { userID });
+      
+          console.log('====================================');
+          console.log('User details:', data);
+          setPlans(data)
+          console.log('====================================');
+        } catch (error) {
+          console.log("Profile update calling error:", error);
+        }
+      };
+      
+      useEffect(() => {
+        profileUpdated();
+      }, []);
+      
 
     const [userPhoto, setUserPhoto] = useState ();
 
     useEffect(()=>{
         if(user && user.photo){
             setUserPhoto(user.photo)
-            console.log("user image : ", user.photo);
         }else{
             setUserPhoto(avatar)
         }
@@ -23,8 +47,6 @@ const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
 
     const userName = user.name;
     const userEmail = user.email;
-    // const userPhoto = user.photo;
-    // const credit = user.credit ;
     return (
         <div className='flex flex-col items-center relative gap-2'>
             <div className='cursor-pointer' onClick={ToModalClose}>
@@ -48,12 +70,12 @@ const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
                 <div>
                     <Lottie animationData={crown} className='h-32 w-32 transform -translate-y-8 -translate-x-1/2 bg-transparent z-10 absolute' />
                 </div>
-                <h1 className='font-bold text-lg mt-16'>Essential</h1>
+                <h1 className='font-bold text-lg mt-16'>{plans.currentPlan !== undefined ? plans.currentPlan : 'Loading...'}</h1>
                 <p className='text-sm'>Package</p>
             </div>
 
             <h1>You have <span className=' font-semibold text-[#DC9F28] '>
-                     5 Credits
+                {plans.credit !== undefined ? plans.credit : 'Loading...'}
                 </span> left!
             </h1>
 
