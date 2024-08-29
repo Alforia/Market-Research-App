@@ -95,9 +95,9 @@ const Dashboard = ({ user }) => {
 
     } else if (reportData && reportData.response) {
       data = reportData.response;
-      const plan = reportData.plan 
-      console.log("paid value checking :" ,plan );
-      
+      const plan = reportData.plan
+      console.log("paid value checking :", plan);
+
       setPaid(plan)
       setNoReportData(true)
     }
@@ -144,6 +144,18 @@ const Dashboard = ({ user }) => {
     'Strategic Recommendations',
     'Appendix'
   ];
+
+  // const headings = [
+  //   "Technological Trends",
+  //   "Regulatory Environment",
+  //   "Consumer Insights",
+  //   "Market Segmentation",
+  //   "Consumer Insights",
+  //   "Competitive Landscape",
+  //   "SWOT Analysis"
+  // ];
+
+  // const headingCounts = {};
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -311,7 +323,7 @@ const Dashboard = ({ user }) => {
     }
   };
 
-
+  const shouldShowCrown = ['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment'];
   return (
     <div className="flex relative px-8 sm:px-20">
 
@@ -348,17 +360,32 @@ const Dashboard = ({ user }) => {
                       heading === 'SWOT Analysis' ||
                       heading === 'Consumer Insights' ||
                       heading === 'Technological Trends' ||
-                      heading === 'Regulatory Environment' ||
-                      heading === 'All Graphs') && (
+                      heading === 'Regulatory Environment') && (
                         <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-999 absolute' />
                         // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
                       )}
                   </div>
-                  
-                  <div
-                    dangerouslySetInnerHTML={{ __html: reports[heading] }} className={` ${heading === 'Market Segmentation' && "blur-sm"}`}
-                  />
+                  {(
+                    heading === 'Market Segmentation' ||
+                    heading === 'Competitive Landscape' ||
+                    heading === 'SWOT Analysis' ||
+                    heading === 'Consumer Insights' ||
+                    heading === 'Technological Trends' ||
+                    heading === 'Regulatory Environment'
+                  ) && paid ? (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: reports[heading] }}
+                      className={"blur-sm"}
+                    />
+                  ) : (
+                    <div dangerouslySetInnerHTML={{ __html: reports[heading] }} />
+                  )}
+
+
+
+
                 </div>
+
               ) : null
             ))}
             {Object.keys(chartData).map((key, index) => {
@@ -376,11 +403,11 @@ const Dashboard = ({ user }) => {
 
           </Masonry>
 
-         
-          <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" :"" }`}>
+
+          <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" : ""}`}>
             <DownloadButton />
             <ReButton />
-          </div> 
+          </div>
         </ResponsiveMasonry>
       </div>
     </div>
