@@ -33,6 +33,7 @@ const Dashboard = ({ user }) => {
   const [chartData, setChartData] = useState({});
   const [history, setHistory] = useState({});
   const [noReportData, setNoReportData] = useState(false);
+  const [paid, setPaid] = useState(false)
 
 
   // modal related states
@@ -90,11 +91,14 @@ const Dashboard = ({ user }) => {
     if (history && history.response) {
       data = history.response;
       setNoReportData(true)
+      // setPaid(false)
+
     } else if (reportData && reportData.response) {
       data = reportData.response;
-      const plajk = reportData.plan 
-      console.log("plan value checking : ",plajk);
+      const plan = reportData.plan 
+      console.log("paid value checking :" ,plan );
       
+      setPaid(plan)
       setNoReportData(true)
     }
 
@@ -346,12 +350,13 @@ const Dashboard = ({ user }) => {
                       heading === 'Technological Trends' ||
                       heading === 'Regulatory Environment' ||
                       heading === 'All Graphs') && (
-                        <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
+                        <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-999 absolute' />
                         // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
                       )}
                   </div>
+                  
                   <div
-                    dangerouslySetInnerHTML={{ __html: reports[heading] }}
+                    dangerouslySetInnerHTML={{ __html: reports[heading] }} className={` ${heading === 'Market Segmentation' && "blur-sm"}`}
                   />
                 </div>
               ) : null
