@@ -10,6 +10,8 @@ import { Bar, Line, Pie, Doughnut, Bubble, PolarArea, Radar } from 'react-chartj
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, BarElement, PointElement, ArcElement, CategoryScale, LinearScale, Filler } from 'chart.js';
 import DownloadButton from '../Components/DownloadButton';
 import ReButton from '../Components/ReButton';
+import DashboardModal from '../Components/Modal/DashoardModal';
+import noData from "../assets/animations/nodata.json"
 
 // Register Chart.js components
 ChartJS.register(
@@ -30,15 +32,20 @@ const Dashboard = ({ user }) => {
   const [reports, setReports] = useState({});
   const [chartData, setChartData] = useState({});
   const [history, setHistory] = useState({});
+  const [noReportData, setNoReportData] = useState(false);
+
+
+  // modal related states
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [modalButton, setModalButton] = useState("")
 
   console.log('user values in dashboard', user);
 
 
   const location = useLocation();
   const { reportData } = location.state || {}; // Retrieve data from location state
-
-  console.log(reportData);
-  
 
   console.log('====================================');
   console.log('history in dashboard :', history);
@@ -82,14 +89,43 @@ const Dashboard = ({ user }) => {
 
     if (history && history.response) {
       data = history.response;
+      setNoReportData(true)
     } else if (reportData && reportData.response) {
       data = reportData.response;
-    }
-    if (data) {
-      parseAndSetData(data, setReports, setChartData);
+      const plajk = reportData.plan 
+      console.log("plan value checking : ",plajk);
+      
+      setNoReportData(true)
     }
 
-  }, [history, reportData, setReports, setChartData]);
+    if (data) {
+      parseAndSetData(data);
+    } else {
+      // Determine what message to display
+      if (!history && !reportData) {
+        setModalContent('Oops! No data available. Please generate some data.');
+        setShowModal(true);
+        setModalButton("Generate")
+      } else if (!reportData && history) {
+        setModalContent('If you not generated any report, Generate any report');
+        setShowModal(true);
+        setModalButton("Okay")
+      }
+    }
+  }, [history, reportData]);
+
+  // Method to close the modal
+  const closeModal = () => setShowModal(false);
+
+  // const toggleSidebar = () => setIsOpen(!isOpen);
+
+  // Render the modal based on state
+  const renderModal = () => {
+    if (showModal) {
+      return <DashboardModal content={modalContent} onClose={closeModal} modalButton={modalButton} />;
+    }
+    return null;
+  };
 
   const fixedHeadings = [
     'Summary',
@@ -254,83 +290,93 @@ const Dashboard = ({ user }) => {
   };
 
 
+
+  const renderHeading = () => {
+    if (!noReportData) {
+
+      return (
+        <div className=' flex flex-col justify-center items-center mt-28 gap-5'>
+          <Lottie animationData={noData} className=' h-64' />
+          <h1 className=' text-2xl text-gray-600'>No Generated Reports here!</h1>
+          <button className=' px-8 py-2 rounded-xl bg-primary text-white ' onClick={toggleSidebar}>
+            check history
+          </button>
+        </div>
+      );
+      return null;
+    }
+  };
+
+
   return (
     <div className="flex relative px-8 sm:px-20">
+
+      {renderModal()}
       <Sidebar
         isOpen={isOpen}
         toggleSidebar={toggleSidebar}
         user={user}
         onSelectHistory={(data) => setHistory(data)}
       />
-      <div className={`flex-1 rounded-3xl transition-all duration-300 ${isOpen ? 'ml-0' : 'ml-0'}`}>
+      <div className={`flex-1  rounded-3xl transition-all duration-300 ${isOpen ? 'ml-0' : 'ml-0', !noReportData ? " h-[70vh]" : ""}`}>
         {!isOpen && (
           <div onClick={toggleSidebar} className='cursor-pointer w-8 flex justify-center '>
             <IoMenuSharp size={26} />
           </div>
         )}
+        {renderHeading()}
+
         <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 2 }}>
-          {
-            reportData  ? (
-              <Masonry gutter="16px" className='pt-4 px-2'>
-                {fixedHeadings.map((heading, index) => (
-                  reports[heading] && reports[heading] !== "Content not available" ? (
-                    <div
-                      key={index}
-                      className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading)
-                          ? ' bg-slate-200 '
-                          : ''
-                        }`}
-                    >
-                      <div className='relative'>
-                        <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{heading}</h1>
-                        {(heading === 'Market Segmentation' ||
-                          heading === 'Competitive Landscape' ||
-                          heading === 'SWOT Analysis' ||
-                          heading === 'Consumer Insights' ||
-                          heading === 'Technological Trends' ||
-                          heading === 'Regulatory Environment' ||
-                          heading === 'All Graphs') && (
-                            <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
-                            // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
-                          )}
-                      </div>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: reports[heading] }}
-                      />
-                    </div>
-                  ) : null
-                ))}
-                {Object.keys(chartData).map((key, index) => {
-                  const chartDetails = chartData[key];
-                  return (
-                    <div
-                      key={index}
-                      className='bg-gray-100 px-8 py-8 rounded-xl relative'
-                    >
-                      <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{chartDetails.title}</h1>
-                      {renderCharts(chartDetails)}
-                    </div>
-                  );
-                })}
+          <Masonry gutter="16px" className='pt-4 px-2'>
+            {fixedHeadings.map((heading, index) => (
+              reports[heading] && reports[heading] !== "Content not available" ? (
+                <div
+                  key={index}
+                  className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading)
+                    ? ' bg-slate-200'
+                    : ''
+                    }`}
+                >
+                  <div className='relative'>
+                    <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{heading}</h1>
+                    {(heading === 'Market Segmentation' ||
+                      heading === 'Competitive Landscape' ||
+                      heading === 'SWOT Analysis' ||
+                      heading === 'Consumer Insights' ||
+                      heading === 'Technological Trends' ||
+                      heading === 'Regulatory Environment' ||
+                      heading === 'All Graphs') && (
+                        <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-10 absolute' />
+                        // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
+                      )}
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: reports[heading] }}
+                  />
+                </div>
+              ) : null
+            ))}
+            {Object.keys(chartData).map((key, index) => {
+              const chartDetails = chartData[key];
+              return (
+                <div
+                  key={index}
+                  className='bg-gray-100 px-8 py-8 rounded-xl relative'
+                >
+                  <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{chartDetails.title}</h1>
+                  {renderCharts(chartDetails)}
+                </div>
+              );
+            })}
 
-              </Masonry>
-            ) : (
-              <div>
-                <h2>nothing to display</h2>
-              </div>
-            )
-          }
+          </Masonry>
 
+         
+          <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" :"" }`}>
+            <DownloadButton />
+            <ReButton />
+          </div> 
         </ResponsiveMasonry>
-        {
-          reportData ? (
-            <div className=' flex justify-center gap-10 py-12'>
-              <DownloadButton />
-              <ReButton />
-            </div>
-          ): null
-        }
-
       </div>
     </div>
   );

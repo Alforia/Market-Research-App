@@ -19,7 +19,7 @@ const Report = ({ user }) => {
     const submitData = async () => {
         try {
             const apiUrl = import.meta.env.VITE_API_URL;
-            const response = await fetch(`${apiUrl}/api/ask`, {
+            const response = await fetch(`${apiUrl}api/ask`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

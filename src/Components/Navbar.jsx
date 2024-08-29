@@ -77,7 +77,7 @@ function Navbar({ loggedIn, user, ToModalOpen }) {
                 <button onClick={() => handleScrollNavigation('pricing')}>Pricing</button>
               </li>
               <li className="font-medium cursor-pointer">
-                {location.pathname === "/explore" ? (
+                {location.pathname === "/explore" || "/dashboard" ? (
                   <button onClick={() => handleScrollNavigation('/')}>Home</button>
                 ) : (
                   <button onClick={() => handleScrollNavigation('faq')}>Faq</button>
