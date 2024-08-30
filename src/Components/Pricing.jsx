@@ -139,10 +139,10 @@ const Pricing = ({ user }) => {
         <p className="text-xl text-gray-500 font-medium">Choose a plan that works best for you and your team.</p>
       </div>
 
-      {/* aler make propr */}
+      {/* alert make propr */}
       {paymentSuccess && <p>Payment was successful! Thank you for your purchase.</p>}
       {paymentError && <p>Payment verification failed. Please try again or contact support.</p>}
-      {/* aler ending  */}
+      {/* alert ending  */}
 
       <div className="flex flex-col justify-between items-center lg:flex-row gap-5">
         <div ref={starterRef} className={`w-full flex-1 mt-8 p-8 order-2 bg-white shadow-xl rounded-3xl sm:w-96 lg:w-full lg:order-1 transition-transform transform duration-1000 ${starterInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>

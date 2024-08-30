@@ -67,7 +67,7 @@ function Navbar({ loggedIn, user, ToModalOpen }) {
           <div className="hidden sm:block">
             <ul className="flex gap-5 items-center justify-center font-medium">
               <li className="font-medium cursor-pointer">
-                {loggedIn ? (
+                {loggedIn && location.pathname !== '/dashboard' ? (
                   <button onClick={() => navigate('/dashboard')}>History</button>
                 ) : (
                   <button onClick={() => handleScrollNavigation('contact')}>Contact Us</button>

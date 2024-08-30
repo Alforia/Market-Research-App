@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../Components/Dashboard/Sidebar';
 import { IoMenuSharp } from "react-icons/io5";
-import { FaCrown } from "react-icons/fa6";
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import Lottie from 'lottie-react';
 import crown from '../assets/animations/crown.json';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigation } from 'react-router-dom';
 import { Bar, Line, Pie, Doughnut, Bubble, PolarArea, Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, LineElement, BarElement, PointElement, ArcElement, CategoryScale, LinearScale, Filler } from 'chart.js';
 import DownloadButton from '../Components/DownloadButton';
 import ReButton from '../Components/ReButton';
 import DashboardModal from '../Components/Modal/DashoardModal';
 import noData from "../assets/animations/nodata.json"
+import { jsPDF } from 'jspdf';
 
 // Register Chart.js components
 ChartJS.register(
@@ -41,9 +41,6 @@ const Dashboard = ({ user }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const [modalButton, setModalButton] = useState("")
-
-  console.log('user values in dashboard', user);
-
 
   const location = useLocation();
   const { reportData } = location.state || {}; // Retrieve data from location state
@@ -91,7 +88,6 @@ const Dashboard = ({ user }) => {
     if (history && history.response) {
       data = history.response;
       setNoReportData(true)
-      // setPaid(false)
 
     } else if (reportData && reportData.response) {
       data = reportData.response;
@@ -121,8 +117,6 @@ const Dashboard = ({ user }) => {
   // Method to close the modal
   const closeModal = () => setShowModal(false);
 
-  // const toggleSidebar = () => setIsOpen(!isOpen);
-
   // Render the modal based on state
   const renderModal = () => {
     if (showModal) {
@@ -145,17 +139,37 @@ const Dashboard = ({ user }) => {
     'Appendix'
   ];
 
-  // const headings = [
-  //   "Technological Trends",
-  //   "Regulatory Environment",
-  //   "Consumer Insights",
-  //   "Market Segmentation",
-  //   "Consumer Insights",
-  //   "Competitive Landscape",
-  //   "SWOT Analysis"
-  // ];
 
-  // const headingCounts = {};
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    let yPosition = 10; // Initial Y position for the text
+  
+    // Add report headings and content to the PDF
+    fixedHeadings.forEach((heading) => {
+      if (reports[heading]) {
+        doc.text(heading, 10, yPosition);
+        yPosition += 10; // Move Y position down after the heading
+        doc.text(reports[heading], 10, yPosition);
+        yPosition += 20; // Move Y position down after the content
+      }
+    });
+  
+    // Optionally, add charts data as well
+    Object.keys(chartData).forEach((key) => {
+      const chartDetails = chartData[key];
+      if (chartDetails && chartDetails.title) {
+        doc.text(chartDetails.title, 10, yPosition);
+        yPosition += 10; // Move Y position down after the chart title
+        // You can also add more details about the chart if needed
+        yPosition += 20; // Move Y position down for the next item
+      }
+    });
+  
+    doc.save('MarketResearch.pdf');
+    console.log("download button clicked");
+  };
+  
+
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -405,7 +419,7 @@ const Dashboard = ({ user }) => {
 
 
           <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" : ""}`}>
-            <DownloadButton />
+            <DownloadButton  dwnldBtn={downloadPDF}/>
             <ReButton />
           </div>
         </ResponsiveMasonry>

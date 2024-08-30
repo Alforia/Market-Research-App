@@ -1,8 +1,8 @@
 import React from 'react';
 
-const DownloadButton = () => {
+const DownloadButton = ({dwnldBtn}) => {
   return (
-    <div className="relative w-32 h-10 bg-white hover:cursor-pointer hover:bg-blue-700 text-black hover:text-white  text-center rounded-lg transition-colors duration-300 group border-2">
+    <div className="relative w-32 h-10 bg-white hover:cursor-pointer hover:bg-blue-700 text-black hover:text-white  text-center rounded-lg transition-colors duration-300 group border-2" onClick={dwnldBtn} >
       <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
         <div className="group-hover:hidden">Download pdf</div>
         <span className="absolute inset-0 flex items-center justify-center top-full group-hover:top-0 transition-top duration-500">
