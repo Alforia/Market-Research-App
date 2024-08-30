@@ -4,6 +4,8 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import LoginModal from './Modal/LoginModal';
 import logo from '../assets/Logo/Hor-Logo.png';
+import marktLogo from "../assets/Logo/Vert-Logo.png"
+import { IoClose } from "react-icons/io5"; 
 
 
 const Pricing = ({ user }) => {
@@ -225,38 +227,56 @@ console.log('handlePayment :',email, name, phone);
         className="fixed inset-0 flex items-center justify-center"
       >
         <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
-          {/* <LoginModal/> */}
-          <div className="modal">
-    <div className="modal-content">
-      <h2>Enter Your Details</h2>
-      <input 
-        type="name" 
-        placeholder="Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-      />
-      <input 
+        <div className=' flex flex-col items-center relative gap-2'>
+        <div className='cursor-pointer' onClick={closeModal}>
+                <IoClose size={25} className='absolute right-0 mr-6 mt-6 transform transition-transform hover:rotate-90'/>
+            </div>
+            <div>
+                <img src={marktLogo} alt="" className=' h-20' />
+            </div>
+            <div>
+                <h1 className=' font-semibold text-2xl text-center'>Enter your Details</h1>
+            </div>
+            <div>
+                <input
+                    type="name"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className=' border-2 px-4 py-2 rounded-lg'
+                />
+            </div>
+            <div>
+            <input 
         type="text" 
         placeholder="Phone Number" 
         value={phone} 
         onChange={(e) => setPhone(e.target.value)} 
+        className=' border-2 px-4 py-2 rounded-lg'
       />
-      <input 
+            </div>
+            <div>
+            <input 
         type="email" 
         placeholder="Email" 
         value={email} 
         onChange={(e) => setEmail(e.target.value)} 
+        className=' border-2 px-4 py-2 rounded-lg'
       />
-      <button onClick={() => {
+            </div>
+            <div>
+                <button className='bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md' onClick={() => {
         if (validateInput(phone, email)) {
           setModalOpenDetails(false);
           handlePayment(phone, email, name);
         } else {
           alert('Please enter valid details');
         }
-      }}>Proceed to Pay</button>
-    </div>
-  </div>
+      }} >
+                    Proceed to Pay
+                </button>
+            </div>
+        </div>
         </div>
       </Modal>
 )}
