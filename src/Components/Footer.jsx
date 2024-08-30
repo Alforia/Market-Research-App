@@ -7,6 +7,10 @@ import { scroller } from 'react-scroll';
 const Footer = () => {
   const navigate = useNavigate();
 
+  const home = ()=>{
+    navigate("/")
+  }
+
   const location = useLocation();
 
   const handleScrollNavigation = (section) => {
@@ -26,7 +30,7 @@ const Footer = () => {
         location.pathname === '/explore' ? (
           ""
         ) : (
-          <div id='footer' className=' w-full h-auto  flex flex-col justify-center items-center'>
+          <div id='footer' className={` w-full h-auto  flex flex-col justify-center items-center ${location.pathname === "/dashboard" ? '' : 'z-20'} ${location.pathname === "/explore" || location.pathname === "/terms" || location.pathname === "/aboutus" || location.pathname === "/refund-policies" || location.pathname === "/privacy" || location.pathname === "/payment" || location.pathname === "/test" || location.pathname === "/dashboard" || location.pathname === "/" ? "" : " hidden" }`}>
             {/* <div className=' flex flex-col gap-5 bg-black rounded-t-[2.5rem] w-full px-12 py-12'>
         <h1 className=' text-2xl sm:text-3xl font-bold text-white text-center'>
           <span className=' text-primary'>30,000+ Users </span>
@@ -56,7 +60,7 @@ const Footer = () => {
                 </ul>
               </div>
               <div>
-                <img src={logo} alt="logo" className=' h-10 ' />
+                <img src={logo} alt="logo" className=' h-10 cursor-pointer' onClick={home}/>
               </div>
               <div>
                 <ul className=' flex gap-5'>

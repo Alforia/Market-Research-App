@@ -20,6 +20,7 @@ import Dashboard from './Pages/Dashboard';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorPage from './Components/ErrorPage';
 
 Modal.setAppElement('#root');
 
@@ -105,11 +106,11 @@ function App() {
         <Route path='/privacy' element={<PrivacyPolicy />} />
         <Route path='/payment' element={<Payment />} />
         <Route path='/test' element={<Test />} />
-        
-        
         <Route path='/dashboard' element={ <Dashboard user={user} />}/>
+        <Route path='*' element={ <ErrorPage/>}/>
       </Routes>
-      <Footer />
+      
+        <Footer />
 
       <Modal
         isOpen={modalOpen}
