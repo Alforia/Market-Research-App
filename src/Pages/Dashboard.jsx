@@ -322,8 +322,8 @@ const Dashboard = ({ user }) => {
       return null;
     }
   };
+console.log('checking value us updated? :',paid);
 
-  const shouldShowCrown = ['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment'];
   return (
     <div className="flex relative px-8 sm:px-20">
 
@@ -372,7 +372,7 @@ const Dashboard = ({ user }) => {
                     heading === 'Consumer Insights' ||
                     heading === 'Technological Trends' ||
                     heading === 'Regulatory Environment'
-                  ) && paid ? (
+                  ) && !paid? (
                     <div
                       dangerouslySetInnerHTML={{ __html: reports[heading] }}
                       className={"blur-sm"}

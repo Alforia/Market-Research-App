@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, redirect } from 'react-router-dom';
 import LandingPage from './Pages/LandingPage';
 import Explore from './Pages/Explore';
 import LoginPage from './Pages/LoginPage';
@@ -28,11 +28,32 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
+
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+  let value = params.token; 
+
+  console.log('token getting from url :',value);
+
+  if (value){
+    localStorage.setItem('token', value);
+    window.location.href = 'http://localhost:5173/';
+  }
+
+  const storedToken = localStorage.getItem('token');
+console.log('Token from local storage:', storedToken);
+  
+
   const getUser = async () => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       const url = `${apiUrl}login/success`;
-      const { data } = await axios.get(url, { withCredentials: true });
+      const headers = {
+        Authorization: `Bearer ${value}`,
+      };
+      const { data } = await axios.get(url, { withCredentials: true, headers: headers });
+      
       if (data.user) {
         console.log('====================================');
         console.log("user details :", data.user);
