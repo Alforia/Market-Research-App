@@ -4,6 +4,8 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import LoginModal from './Modal/LoginModal';
 import logo from '../assets/Logo/Hor-Logo.png';
+import marktLogo from "../assets/Logo/Vert-Logo.png"
+import { IoClose } from "react-icons/io5";
 
 
 const Pricing = ({ user }) => {
@@ -33,17 +35,17 @@ const Pricing = ({ user }) => {
 
 
 
-  
-    // Open modal for user details
-    const openUserDetails = (selectedAmount) => {
-      if (!user) {
-        // window.alert('Please log in to proceed with the payment.');
-        setModalOpen(true);
-        return;
-      } 
-      setAmount(selectedAmount);
-      setModalOpenDetails(true);
-    };
+
+  // Open modal for user details
+  const openUserDetails = (selectedAmount) => {
+    if (!user) {
+      // window.alert('Please log in to proceed with the payment.');
+      setModalOpen(true);
+      return;
+    }
+    setAmount(selectedAmount);
+    setModalOpenDetails(true);
+  };
 
 
   // Close all modals
@@ -56,7 +58,7 @@ const Pricing = ({ user }) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
 
-      const response = await axios.post(`${apiUrl}order`, { amount, currency});
+      const response = await axios.post(`${apiUrl}order`, { amount, currency });
       return response.data;
     } catch (error) {
       console.error('Error creating order:', error);
@@ -65,19 +67,19 @@ const Pricing = ({ user }) => {
   };
 
 
-const validateInput = (phone, email) => {
-  const phoneRegex = /^[6-9]\d{9}$/;  // Adjust regex as per your requirements
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return phoneRegex.test(phone) && emailRegex.test(email);
-};
+  const validateInput = (phone, email) => {
+    const phoneRegex = /^[6-9]\d{9}$/;  // Adjust regex as per your requirements
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return phoneRegex.test(phone) && emailRegex.test(email);
+  };
 
   const handlePayment = async (phone, email, name) => {
 
-console.log('handlePayment :',email, name, phone);
+    console.log('handlePayment :', email, name, phone);
 
     const order = await createOrder(amount);
-    console.log('order : ',order);
-    
+    console.log('order : ', order);
+
     if (!order) return;
 
     const userID = user.userID;
@@ -92,7 +94,7 @@ console.log('handlePayment :',email, name, phone);
       order_id: order.order_id,
       handler: (response) => {
         // Handle payment success
-        
+
         const paymentDetails = {
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_order_id: response.razorpay_order_id,
@@ -116,7 +118,7 @@ console.log('handlePayment :',email, name, phone);
           setPaymentError(true);
         }
       },
-      prefill: { 
+      prefill: {
         name: name,
         email: email,
         contact: phone,
@@ -137,10 +139,10 @@ console.log('handlePayment :',email, name, phone);
         <p className="text-xl text-gray-500 font-medium">Choose a plan that works best for you and your team.</p>
       </div>
 
-      {/* aler make propr */}
+      {/* alert make propr */}
       {paymentSuccess && <p>Payment was successful! Thank you for your purchase.</p>}
       {paymentError && <p>Payment verification failed. Please try again or contact support.</p>}
-      {/* aler ending  */}
+      {/* alert ending  */}
 
       <div className="flex flex-col justify-between items-center lg:flex-row gap-5">
         <div ref={starterRef} className={`w-full flex-1 mt-8 p-8 order-2 bg-white shadow-xl rounded-3xl sm:w-96 lg:w-full lg:order-1 transition-transform transform duration-1000 ${starterInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
@@ -216,52 +218,73 @@ console.log('handlePayment :',email, name, phone);
         </div>
       </div>
       {modalOpenDetails && (
-  
-  <Modal 
-        isOpen={modalOpenDetails} // Updated to use modalOpen state
-        onRequestClose={closeModal} // Updated to use closeModal function
-        // contentLabel='User Not Logged In'
-        overlayClassName="fixed inset-0 bg-black bg-opacity-75"
-        className="fixed inset-0 flex items-center justify-center"
-      >
-        <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
-          {/* <LoginModal/> */}
-          <div className="modal">
-    <div className="modal-content">
-      <h2>Enter Your Details</h2>
-      <input 
-        type="name" 
-        placeholder="Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-      />
-      <input 
-        type="text" 
-        placeholder="Phone Number" 
-        value={phone} 
-        onChange={(e) => setPhone(e.target.value)} 
-      />
-      <input 
-        type="email" 
-        placeholder="Email" 
-        value={email} 
-        onChange={(e) => setEmail(e.target.value)} 
-      />
-      <button onClick={() => {
-        if (validateInput(phone, email)) {
-          setModalOpenDetails(false);
-          handlePayment(phone, email, name);
-        } else {
-          alert('Please enter valid details');
-        }
-      }}>Proceed to Pay</button>
-    </div>
-  </div>
-        </div>
-      </Modal>
-)}
 
-      <Modal 
+        <Modal
+          isOpen={modalOpenDetails} // Updated to use modalOpen state
+          onRequestClose={closeModal} // Updated to use closeModal function
+          // contentLabel='User Not Logged In'
+          overlayClassName="fixed inset-0 bg-black bg-opacity-75"
+          className="fixed inset-0 flex items-center justify-center"
+        >
+          <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
+            <div className=' flex flex-col items-center relative gap-6'>
+              <div className='cursor-pointer' onClick={closeModal}>
+                <IoClose size={25} className='absolute right-0 mr-6 mt-6 transform transition-transform hover:rotate-90' />
+              </div>
+              <div>
+                <img src={marktLogo} alt="" className=' h-20' />
+              </div>
+              <div>
+                <h1 className=' font-semibold text-2xl text-center'>Enter your Details</h1>
+              </div>
+              <div className=' flex flex-col'>
+                <label htmlFor="" className=' ml-4 text-sm'>Name</label>
+                <input
+                  type="name"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className=' border-2 px-4 py-2 rounded-lg w-72'
+                />
+              </div>
+              <div className=' flex flex-col'>
+              <label htmlFor="" className=' ml-4 text-sm'>Phone Number</label>
+                <input
+                  type="text"
+                  placeholder="Phone Number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className=' border-2 px-4 py-2 rounded-lg w-72'
+                />
+              </div>
+              <div className=' flex flex-col'>
+              <label htmlFor="" className=' ml-4 text-sm'>Email ID</label>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className=' border-2 px-4 py-2 rounded-lg w-72 font-extralight'
+                />
+              </div>
+              <div>
+                <button className='bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md' onClick={() => {
+                  if (validateInput(phone, email)) {
+                    setModalOpenDetails(false);
+                    handlePayment(phone, email, name);
+                  } else {
+                    alert('Please enter valid details');
+                  }
+                }} >
+                  Proceed to Pay
+                </button>
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      <Modal
         isOpen={modalOpen} // Updated to use modalOpen state
         onRequestClose={closeModal} // Updated to use closeModal function
         contentLabel='User Not Logged In'
@@ -269,7 +292,7 @@ console.log('handlePayment :',email, name, phone);
         className="fixed inset-0 flex items-center justify-center"
       >
         <div className="bg-white rounded-2xl p-6 w-full max-w-md mx-auto">
-          <LoginModal/>
+          <LoginModal />
         </div>
       </Modal>
     </main>

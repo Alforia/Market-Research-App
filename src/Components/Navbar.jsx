@@ -56,7 +56,7 @@ function Navbar({ loggedIn, user, ToModalOpen }) {
 
   return (
     <>
-      <div className={`w-full h-auto flex  bg-white bg-opacity-90 justify-between items-center px-7 md:px-32 lg:pl-32 py-6 transition-transform duration-300 ${isNavbarVisible ? 'sticky top-0' : '-top-20'} ${location.pathname === "/dashboard" ? '' : 'z-20'}`}>
+      <div className={`w-full h-auto flex  bg-white bg-opacity-90 justify-between items-center px-7 md:px-32 lg:pl-32 py-6 transition-transform duration-300 ${isNavbarVisible ? 'sticky top-0' : '-top-20'} ${location.pathname === "/dashboard" ? '' : 'z-20'} ${location.pathname === "/explore" || location.pathname === "/terms" || location.pathname === "/aboutus" || location.pathname === "/refund-policies" || location.pathname === "/privacy" || location.pathname === "/payment" || location.pathname === "/test" || location.pathname === "/dashboard" || location.pathname === "/" ? "" : " hidden" } `}>
         <div className="justify-center  items-center">
           <Link to="/">
             <img src={logo} alt="" className="h-8 md:h-10" />
@@ -67,7 +67,7 @@ function Navbar({ loggedIn, user, ToModalOpen }) {
           <div className="hidden sm:block">
             <ul className="flex gap-5 items-center justify-center font-medium">
               <li className="font-medium cursor-pointer">
-                {loggedIn ? (
+                {loggedIn && location.pathname !== '/dashboard' ? (
                   <button onClick={() => navigate('/dashboard')}>History</button>
                 ) : (
                   <button onClick={() => handleScrollNavigation('contact')}>Contact Us</button>

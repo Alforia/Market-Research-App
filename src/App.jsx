@@ -20,6 +20,7 @@ import Dashboard from './Pages/Dashboard';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ErrorPage from './Components/ErrorPage';
 
 Modal.setAppElement('#root');
 
@@ -50,7 +51,7 @@ console.log('Token from local storage:', storedToken);
       const apiUrl = import.meta.env.VITE_API_URL;
       const url = `${apiUrl}login/success`;
       const headers = {
-        Authorization: `Bearer ${value}`,
+        Authorization: `Bearer ${storedToken}`,
       };
       const { data } = await axios.get(url, { withCredentials: true, headers: headers });
       
@@ -81,6 +82,7 @@ console.log('Token from local storage:', storedToken);
 
   const handleLogout = async () => {
     try {
+      localStorage.clear();
       const apiUrl = import.meta.env.VITE_API_URL;
       await axios.get(`${apiUrl}/logout`, { withCredentials: true });
       setLoggedIn(false);
@@ -126,11 +128,11 @@ console.log('Token from local storage:', storedToken);
         <Route path='/privacy' element={<PrivacyPolicy />} />
         <Route path='/payment' element={<Payment />} />
         <Route path='/test' element={<Test />} />
-        
-        
         <Route path='/dashboard' element={ <Dashboard user={user} />}/>
+        <Route path='*' element={ <ErrorPage/>}/>
       </Routes>
-      <Footer />
+      
+        <Footer />
 
       <Modal
         isOpen={modalOpen}
