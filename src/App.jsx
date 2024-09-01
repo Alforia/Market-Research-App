@@ -39,7 +39,8 @@ function App() {
 
   if (value){
     localStorage.setItem('token', value);
-    window.location.href = 'http://localhost:5173/';
+    const apiUrl = import.meta.env.VITE_CLIENT_URL;
+    window.location.href = apiUrl;
   }
 
   const storedToken = localStorage.getItem('token');
