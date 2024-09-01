@@ -33,7 +33,7 @@ const Dashboard = ({ user }) => {
   const [chartData, setChartData] = useState({});
   const [history, setHistory] = useState({});
   const [noReportData, setNoReportData] = useState(false);
-  const [paid, setPaid] = useState(false)
+  const [paid, setPaid] = useState()
 
 
   // modal related states
@@ -88,12 +88,12 @@ const Dashboard = ({ user }) => {
     if (history && history.response) {
       data = history.response;
       setNoReportData(true)
+      // setPaid(false)
 
     } else if (reportData && reportData.response) {
       data = reportData.response;
       const plan = reportData.plan
-      console.log("paid value checking :", plan);
-
+      // console.log("paid value checking :", plan);
       setPaid(plan)
       setNoReportData(true)
     }
@@ -386,7 +386,7 @@ console.log('checking value us updated? :',paid);
                     heading === 'Consumer Insights' ||
                     heading === 'Technological Trends' ||
                     heading === 'Regulatory Environment'
-                  ) && !paid? (
+                  ) && (paid === 'a')? (
                     <div
                       dangerouslySetInnerHTML={{ __html: reports[heading] }}
                       className={"blur-sm"}

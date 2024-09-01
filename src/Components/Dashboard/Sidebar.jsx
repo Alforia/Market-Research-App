@@ -12,7 +12,7 @@ const Sidebar = ({ isOpen, toggleSidebar, onSelectHistory, user }) => {
 
   const navigate = useNavigate()
 
-  console.log('user values in side bar :',);
+  console.log('user values in side bar :',user);
   
 
   const quickStart =()=>{
@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, toggleSidebar, onSelectHistory, user }) => {
       console.log('use effect is calling..');
       try {
         const apiUrl = import.meta.env.VITE_API_URL;
-        const response = await fetch(`${apiUrl}/history`, {
+        const response = await fetch(`${apiUrl}history`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
