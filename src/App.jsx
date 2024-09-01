@@ -188,8 +188,23 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+  let value = params.token; 
+
+  console.log('token getting from url :',value);
+
+  if (value){
+    localStorage.setItem('token', value);
+    const apiUrl = import.meta.env.VITE_CLIENT_URL;
+    window.location.href = apiUrl;
+  }
+
   const storedToken = localStorage.getItem('token');
-  console.log('Token from local storage:', storedToken);
+console.log('Token from local storage:', storedToken);
+
+
 
   const getUser = async () => {
     try {
@@ -212,7 +227,7 @@ function App() {
       setLoggedIn(false);
     }
   };
-
+  
   useEffect(() => {
     getUser();
   }, []);
@@ -253,7 +268,7 @@ function App() {
       />
       <Routes>
         <Route path='/' element={<LandingPage user={user} />} />
-        <Route path='/auth_callback' element={<AuthCallback />} /> {/* Updated Route for AuthCallback */}
+        {/* <Route path='/auth_callback' element={<AuthCallback />} /> Updated Route for AuthCallback */}
         <Route path='/login' element={
           <ProtectedRoute loggedIn={loggedIn}>
             <LoginPage handleLogin={handleLogin} getUser={getUser} />
