@@ -8,26 +8,19 @@ const AuthCallback = () => {
     // Retrieve the token from the URL parameters
     const params = new URLSearchParams(window.location.search);
     const token = params.get('token');
-  
+
     console.log('Token received from URL:', token);
-  
+
     if (token) {
       // Store the token in localStorage
-      try {
-        localStorage.setItem('token', token);
-        // Add a slight delay before navigating
-        setTimeout(() => {
-          navigate('/');
-        }, 100); // Delay of 100 milliseconds
-      } catch (error) {
-        console.error('Failed to save token:', error);
-      }
+      localStorage.setItem('token', token);
+
+      // Redirect to the home page
+      navigate('/');
     } else {
       console.log('No token found in URL.');
-      navigate('/login'); // Redirect to login if no token
     }
   }, [navigate]);
-  
 
   return (
     <div>
