@@ -130,7 +130,7 @@ console.log('Token from local storage:', storedToken);
         <Route path='/payment' element={<Payment />} />
         <Route path='/test' element={<Test />} />
         <Route path='/dashboard' element={ <Dashboard user={user} />}/>
-        <Route path='*' element={ <ErrorPage/>}/>
+        {/* <Route path='*' element={ <ErrorPage/>}/> */}
       </Routes>
       
         <Footer />
