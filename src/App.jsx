@@ -76,17 +76,17 @@ console.log('Token from local storage:', storedToken);
   };
 
   const handleLogout = async () => {
-    try {
-      localStorage.clear();
-      const apiUrl = import.meta.env.VITE_API_URL;
-      await axios.get(`${apiUrl}/logout`, { withCredentials: true });
+    // try {
+      // localStorage.clear();
+      // const apiUrl = import.meta.env.VITE_API_URL;
+      // await axios.get(`${apiUrl}/logout`, { withCredentials: true });
       setLoggedIn(false);
       setUser(null);
-      console.log("Logged out");
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
+      // console.log("Logged out");
+      // window.location.href = '/';
+    // } catch (error) {
+    //   console.error('Error logging out:', error);
+    // }
   };
 
   const ToModalOpen = () => {

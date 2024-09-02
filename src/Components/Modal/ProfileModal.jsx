@@ -4,14 +4,18 @@ import Lottie from 'lottie-react';
 import crown from '../../assets/animations/crown.json';
 import avatar from '../../assets/Images/avatar.jpg'
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const ProfileModal = ({ ToModalClose, handleLogout, user }) => {
     const [plans, setPlans] = useState({ currentPlan: 'Loading...', credit: 'Loading...' });
-
+    const navigate = useNavigate();
 
     const logoutClick = () => {
+        localStorage.clear();
+        window.location.href = '/';
         ToModalClose();
-        handleLogout();
+        // handleLogout();
     };
 
     const profileUpdated = async () => {

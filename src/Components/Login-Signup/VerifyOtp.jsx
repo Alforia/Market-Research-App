@@ -54,10 +54,17 @@ const VerifyOtp = ({ getUser, email }) => {
                 withCredentials: true
             });
 
+            // console.log('response in otp :',response);
+            
+
             if (!response.data.error) {
                 toast.success("Login Success");
-                await getUser();
-                navigate("/"); // Redirect to the main page after successful login
+                const userID = response.data.user.userID;
+                const value = JSON.stringify({ userID })
+                localStorage.setItem('token', value);
+                getUser();
+                window.location.href = '/';
+                // navigate("/"); 
             } else {
                 toast.error(response.data.message);
             }
