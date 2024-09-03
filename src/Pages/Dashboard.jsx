@@ -13,6 +13,7 @@ import DashboardModal from '../Components/Modal/DashoardModal';
 import noData from "../assets/animations/nodata.json"
 import { jsPDF } from 'jspdf';
 import html2canvas from 'html2canvas';
+import pdfImag from '../assets/Logo/Hor-Logo.png'; 
 // npm install html2canvas 
 
 
@@ -184,7 +185,7 @@ const Dashboard = ({ user }) => {
       pdf.text("Market Research Report", 15, 20); // Adjust the position as needed (x, y)
   
       // Add a clickable image near the heading
-      const imageURL = '/src/assets/Logo/Hor-Logo.png'; // Replace with the actual image URL or base64 string
+      const imageURL =  pdfImag; // Replace with the actual image URL or base64 string
       const imageX = 170; // X-position near the heading
       const imageY = 10;  // Y-position near the heading
       const imageWidth = 25; // Width of the image
@@ -201,7 +202,7 @@ const Dashboard = ({ user }) => {
       pdf.addImage(imgData, 'JPEG', 0, position + 30, imgWidth, imgHeight, '', 'FAST'); // Use JPEG format and FAST compression mode
   
       // Add watermark image
-      const watermark = '/src/assets/Logo/Hor-Logo.png'; // Replace with your watermark image path or base64 string
+      const watermark = pdfImag; // Replace with your watermark image path or base64 string
       const watermarkWidth = 100; // Adjust as needed
       const watermarkHeight = 50; // Adjust as needed
       const watermarkX = (imgWidth - watermarkWidth) / 2; // Center horizontally
