@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from '../Components/Dashboard/Sidebar';
 import { IoMenuSharp } from "react-icons/io5";
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
@@ -12,6 +12,9 @@ import ReButton from '../Components/ReButton';
 import DashboardModal from '../Components/Modal/DashoardModal';
 import noData from "../assets/animations/nodata.json"
 import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
+// npm install html2canvas 
+
 
 // Register Chart.js components
 ChartJS.register(
@@ -34,6 +37,10 @@ const Dashboard = ({ user }) => {
   const [history, setHistory] = useState({});
   const [noReportData, setNoReportData] = useState(false);
   const [paid, setPaid] = useState()
+
+  // const dashboardRef = useRef(); //added this line 
+  const masonryRef = useRef();
+  const [isMounted, setIsMounted] = useState(false);
 
 
   // modal related states
@@ -139,37 +146,100 @@ const Dashboard = ({ user }) => {
     'Appendix'
   ];
 
+  useEffect(() => {
+    // Component is mounted
+    setIsMounted(true);
+  }, []);
 
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-    let yPosition = 10; // Initial Y position for the text
+  const downloadPDF = async () => {
+    if (!isMounted) {
+      console.log("Component is not mounted");
+      return; // Exit if the component is not yet mounted
+    }
   
-    // Add report headings and content to the PDF
-    fixedHeadings.forEach((heading) => {
-      if (reports[heading]) {
-        doc.text(heading, 10, yPosition);
-        yPosition += 10; // Move Y position down after the heading
-        doc.text(reports[heading], 10, yPosition);
-        yPosition += 20; // Move Y position down after the content
+    if (!masonryRef.current) {
+      console.log("Element not found");
+      return; // Ensure the element exists
+    }
+  
+    try {
+      // Render the masonry element to a canvas with a higher scale for better resolution
+      const canvas = await html2canvas(masonryRef.current, {
+        scale: 2, // Increase the scale to 2 for higher resolution (default is 1)
+        useCORS: true, // Allows cross-origin images
+      });
+  
+      // Convert canvas to an image with higher quality
+      const imgData = canvas.toDataURL('image/jpeg', 0.85); // Use JPEG format and set quality to 85%
+  
+      // Create a new jsPDF document
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let position = 0;
+  
+      // Add a constant heading
+      pdf.setFontSize(20);
+      pdf.text("Market Research Report", 15, 20); // Adjust the position as needed (x, y)
+  
+      // Add a clickable image near the heading
+      const imageURL = '/src/assets/Logo/Hor-Logo.png'; // Replace with the actual image URL or base64 string
+      const imageX = 170; // X-position near the heading
+      const imageY = 10;  // Y-position near the heading
+      const imageWidth = 25; // Width of the image
+      const imageHeight = 25; // Height of the image
+  
+      // Add the image
+      pdf.addImage(imageURL, 'PNG', imageX, imageY, imageWidth, imageHeight);
+  
+      // Add a clickable link to the image
+      const link = "https://marketinsight.alforia.ai/"; // Replace with your desired link
+      pdf.link(imageX, imageY, imageWidth, imageHeight, { url: link });
+  
+      // Add the rendered image (the main content) with high quality
+      pdf.addImage(imgData, 'JPEG', 0, position + 30, imgWidth, imgHeight, '', 'FAST'); // Use JPEG format and FAST compression mode
+  
+      // Add watermark image
+      const watermark = '/src/assets/Logo/Hor-Logo.png'; // Replace with your watermark image path or base64 string
+      const watermarkWidth = 100; // Adjust as needed
+      const watermarkHeight = 50; // Adjust as needed
+      const watermarkX = (imgWidth - watermarkWidth) / 2; // Center horizontally
+      const watermarkY = (pageHeight - watermarkHeight) / 2; // Center vertically
+  
+      // Set the opacity for the watermark
+      pdf.setGState(new pdf.GState({ opacity: 0.3 }));
+  
+      // Add the watermark image
+      pdf.addImage(watermark, 'PNG', watermarkX, watermarkY, watermarkWidth, watermarkHeight);
+  
+      // Reset the opacity for subsequent content
+      pdf.setGState(new pdf.GState({ opacity: 1 }));
+  
+      if (imgHeight > pageHeight) {
+        let heightLeft = imgHeight - pageHeight;
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, '', 'FAST');
+  
+          // Add watermark on subsequent pages
+          pdf.setGState(new pdf.GState({ opacity: 0.5 }));
+          pdf.addImage(watermark, 'PNG', watermarkX, watermarkY, watermarkWidth, watermarkHeight);
+          pdf.setGState(new pdf.GState({ opacity: 1 }));
+  
+          heightLeft -= pageHeight;
+        }
       }
-    });
   
-    // Optionally, add charts data as well
-    Object.keys(chartData).forEach((key) => {
-      const chartDetails = chartData[key];
-      if (chartDetails && chartDetails.title) {
-        doc.text(chartDetails.title, 10, yPosition);
-        yPosition += 10; // Move Y position down after the chart title
-        // You can also add more details about the chart if needed
-        yPosition += 20; // Move Y position down for the next item
-      }
-    });
-  
-    doc.save('MarketResearch.pdf');
-    console.log("download button clicked");
+      // Save the PDF
+      pdf.save('MarketResearch.pdf');
+      console.log("PDF downloaded successfully");
+    } catch (error) {
+      console.error("Error capturing PDF:", error);
+    }
   };
   
-
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -319,8 +389,6 @@ const Dashboard = ({ user }) => {
     }
   };
 
-
-
   const renderHeading = () => {
     if (!noReportData) {
 
@@ -336,7 +404,7 @@ const Dashboard = ({ user }) => {
       return null;
     }
   };
-console.log('checking value us updated? :',paid);
+  console.log('checking value us updated? :', paid);
 
   return (
     <div className="flex relative px-8 sm:px-20">
@@ -356,73 +424,72 @@ console.log('checking value us updated? :',paid);
         )}
         {renderHeading()}
 
-        <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 2 }}>
-          <Masonry gutter="16px" className='pt-4 px-2'>
-            {fixedHeadings.map((heading, index) => (
-              reports[heading] && reports[heading] !== "Content not available" ? (
-                <div
-                  key={index}
-                  className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading)
-                    ? ' bg-slate-200'
-                    : ''
-                    }`}
-                >
-                  <div className='relative'>
-                    <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{heading}</h1>
-                    {(heading === 'Market Segmentation' ||
+        <div ref={masonryRef}>
+          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 2 }}>
+
+            <Masonry gutter="16px" className='pt-4 px-2'>
+              {fixedHeadings.map((heading, index) => (
+                reports[heading] && reports[heading] !== "Content not available" ? (
+                  <div
+                    key={index}
+                    className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading)
+                      ? ' bg-slate-200'
+                      : ''
+                      }`}
+                  >
+                    <div className='relative'>
+                      <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{heading}</h1>
+                      {(heading === 'Market Segmentation' ||
+                        heading === 'Competitive Landscape' ||
+                        heading === 'SWOT Analysis' ||
+                        heading === 'Consumer Insights' ||
+                        heading === 'Technological Trends' ||
+                        heading === 'Regulatory Environment') && (
+                          <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-999 absolute' />
+                          // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
+                        )}
+                    </div>
+                    {(
+                      heading === 'Market Segmentation' ||
                       heading === 'Competitive Landscape' ||
                       heading === 'SWOT Analysis' ||
                       heading === 'Consumer Insights' ||
                       heading === 'Technological Trends' ||
-                      heading === 'Regulatory Environment') && (
-                        <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-999 absolute' />
-                        // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
-                      )}
+                      heading === 'Regulatory Environment'
+                    ) && (paid === 'a') ? (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: reports[heading] }}
+                        className={"blur-sm"}
+                      />
+                    ) : (
+                      <div dangerouslySetInnerHTML={{ __html: reports[heading] }} />
+                    )}
+
                   </div>
-                  {(
-                    heading === 'Market Segmentation' ||
-                    heading === 'Competitive Landscape' ||
-                    heading === 'SWOT Analysis' ||
-                    heading === 'Consumer Insights' ||
-                    heading === 'Technological Trends' ||
-                    heading === 'Regulatory Environment'
-                  ) && (paid === 'a')? (
-                    <div
-                      dangerouslySetInnerHTML={{ __html: reports[heading] }}
-                      className={"blur-sm"}
-                    />
-                  ) : (
-                    <div dangerouslySetInnerHTML={{ __html: reports[heading] }} />
-                  )}
+
+                ) : null
+              ))}
+              {Object.keys(chartData).map((key, index) => {
+                const chartDetails = chartData[key];
+                return (
+                  <div
+                    key={index}
+                    className='bg-gray-100 px-8 py-8 rounded-xl relative'
+                  >
+                    <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{chartDetails.title}</h1>
+                    {renderCharts(chartDetails)}
+                  </div>
+                );
+              })}
+            </Masonry>
 
 
-
-
-                </div>
-
-              ) : null
-            ))}
-            {Object.keys(chartData).map((key, index) => {
-              const chartDetails = chartData[key];
-              return (
-                <div
-                  key={index}
-                  className='bg-gray-100 px-8 py-8 rounded-xl relative'
-                >
-                  <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{chartDetails.title}</h1>
-                  {renderCharts(chartDetails)}
-                </div>
-              );
-            })}
-
-          </Masonry>
-
-
-          <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" : ""}`}>
-            <DownloadButton  dwnldBtn={downloadPDF}/>
-            <ReButton />
-          </div>
-        </ResponsiveMasonry>
+          </ResponsiveMasonry>
+        </div>
+        <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" : ""}`}>
+          <DownloadButton dwnldBtn={downloadPDF} />
+          <ReButton />
+        </div>
       </div>
     </div>
   );
