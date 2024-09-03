@@ -20,12 +20,15 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from './Components/ErrorPage';
 
+import './App.css'
+
 Modal.setAppElement('#root');
 
 function App() {
   const [user, setUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
@@ -41,11 +44,15 @@ function App() {
   }
 
   const storedToken = localStorage.getItem('token');
+  if (storedToken && !user){
+    
+  }
 console.log('Token from local storage:', storedToken);
 
 
 
   const getUser = async () => {
+    setLoading(true); 
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       const url = `${apiUrl}/login/success`;
@@ -64,29 +71,25 @@ console.log('Token from local storage:', storedToken);
     } catch (error) {
       console.log("Login error:", error);
       setLoggedIn(false);
+    } finally {
+      setLoading(false); 
     }
   };
   
   useEffect(() => {
-    getUser();
-  }, []);
+    if (storedToken && !user) {
+      
+      getUser();
+    }
+  }, [storedToken, user]);
 
   const handleLogin = () => {
     console.log("Logged in");
   };
 
   const handleLogout = async () => {
-    // try {
-      // localStorage.clear();
-      // const apiUrl = import.meta.env.VITE_API_URL;
-      // await axios.get(`${apiUrl}/logout`, { withCredentials: true });
       setLoggedIn(false);
       setUser(null);
-      // console.log("Logged out");
-      // window.location.href = '/';
-    // } catch (error) {
-    //   console.error('Error logging out:', error);
-    // }
   };
 
   const ToModalOpen = () => {
@@ -105,6 +108,11 @@ console.log('Token from local storage:', storedToken);
         user={user}
         ToModalOpen={ToModalOpen}
       />
+       {loading ? ( 
+      //  loader css file in App.css name is ".loader" and make proper 
+        <div className="loader">Loading...</div>
+      ) : (
+        <>
       <Routes>
         <Route path='/' element={<LandingPage user={user} />} />
         <Route path='/login' element={
@@ -124,6 +132,9 @@ console.log('Token from local storage:', storedToken);
       </Routes>
       
       <Footer />
+
+      </>
+      )}
 
       <Modal
         isOpen={modalOpen}
