@@ -175,21 +175,22 @@ const Dashboard = ({ user }) => {
   
       // Create a new jsPDF document
       const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgWidth = 210; // A4 width in mm
+      const imgWidth = 190; // Reduced width to create margins on both sides (A4 width is 210 mm)
       const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const sideMargins = (210 - imgWidth) / 2; // Calculate the side margin to center the image
+      const imgHeight = (canvas.height * imgWidth) / canvas.width; // Adjust the height proportionally to the new width
       let position = 0;
   
       // Add a constant heading
       pdf.setFontSize(20);
-      pdf.text("Market Research Report", 15, 20); // Adjust the position as needed (x, y)
+      pdf.text("Market Research Report", 20, 18); // Adjust the position as needed (x, y)
   
       // Add a clickable image near the heading
       const imageURL =  pdfImag; // Replace with the actual image URL or base64 string
-      const imageX = 170; // X-position near the heading
+      const imageX = 150; // X-position near the heading
       const imageY = 10;  // Y-position near the heading
-      const imageWidth = 25; // Width of the image
-      const imageHeight = 25; // Height of the image
+      const imageWidth = 35; // Width of the image
+      const imageHeight = 10; // Height of the image
   
       // Add the image
       pdf.addImage(imageURL, 'PNG', imageX, imageY, imageWidth, imageHeight);
@@ -199,17 +200,17 @@ const Dashboard = ({ user }) => {
       pdf.link(imageX, imageY, imageWidth, imageHeight, { url: link });
   
       // Add the rendered image (the main content) with high quality
-      pdf.addImage(imgData, 'JPEG', 0, position + 30, imgWidth, imgHeight, '', 'FAST'); // Use JPEG format and FAST compression mode
+      pdf.addImage(imgData, 'JPEG', sideMargins, position + 30, imgWidth, imgHeight, '', 'FAST'); // 'sideMargins' for equal margins
   
       // Add watermark image
       const watermark = pdfImag; // Replace with your watermark image path or base64 string
-      const watermarkWidth = 100; // Adjust as needed
-      const watermarkHeight = 50; // Adjust as needed
+      const watermarkWidth = 70; // Adjust as needed
+      const watermarkHeight = 20; // Adjust as needed
       const watermarkX = (imgWidth - watermarkWidth) / 2; // Center horizontally
       const watermarkY = (pageHeight - watermarkHeight) / 2; // Center vertically
   
       // Set the opacity for the watermark
-      pdf.setGState(new pdf.GState({ opacity: 0.3 }));
+      pdf.setGState(new pdf.GState({ opacity: 0.2 }));
   
       // Add the watermark image
       pdf.addImage(watermark, 'PNG', watermarkX, watermarkY, watermarkWidth, watermarkHeight);
@@ -426,67 +427,72 @@ const Dashboard = ({ user }) => {
         {renderHeading()}
 
         <div ref={masonryRef}>
-          <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 2 }}>
+  <ResponsiveMasonry columnsCountBreakPoints={{ 350: 1, 750: 2, 900: 2 }}>
+    <Masonry gutter="16px" className='pt-4 px-2'>
+      {fixedHeadings.map((heading, index) => (
+        reports[heading] && reports[heading] !== "Content not available" ? (
+          <div
+            key={index}
+            className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading)
+              ? ' bg-slate-200'
+              : ''
+              }`}
+            style={{ fontSize: '18px' }} // Increased font size for the content
+          >
+            <div className='relative'>
+              {/* Increase the font size for headings */}
+              <h1 className='text-left mb-6 text-primary font-bold' style={{ fontSize: '26px' }}>
+                {heading}
+              </h1>
+              {(heading === 'Market Segmentation' ||
+                heading === 'Competitive Landscape' ||
+                heading === 'SWOT Analysis' ||
+                heading === 'Consumer Insights' ||
+                heading === 'Technological Trends' ||
+                heading === 'Regulatory Environment') && (
+                  <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-999 absolute' />
+                )}
+            </div>
+            {(
+              heading === 'Market Segmentation' ||
+              heading === 'Competitive Landscape' ||
+              heading === 'SWOT Analysis' ||
+              heading === 'Consumer Insights' ||
+              heading === 'Technological Trends' ||
+              heading === 'Regulatory Environment'
+            ) && (paid === 'a') ? (
+              <div
+                dangerouslySetInnerHTML={{ __html: reports[heading] }}
+                className={"blur-sm"}
+                style={{ fontSize: '18px' }} // Increased font size for the report content
+              />
+            ) : (
+              <div dangerouslySetInnerHTML={{ __html: reports[heading] }} style={{ fontSize: '18px' }} /> // Increase font size here too
+            )}
 
-            <Masonry gutter="16px" className='pt-4 px-2'>
-              {fixedHeadings.map((heading, index) => (
-                reports[heading] && reports[heading] !== "Content not available" ? (
-                  <div
-                    key={index}
-                    className={`bg-gray-50 border-2 border-gray-150 px-8 py-8 rounded-xl relative ${['Market Segmentation', 'Competitive Landscape', 'SWOT Analysis', 'Consumer Insights', 'Technological Trends', 'Regulatory Environment', 'All Graphs'].includes(heading)
-                      ? ' bg-slate-200'
-                      : ''
-                      }`}
-                  >
-                    <div className='relative'>
-                      <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{heading}</h1>
-                      {(heading === 'Market Segmentation' ||
-                        heading === 'Competitive Landscape' ||
-                        heading === 'SWOT Analysis' ||
-                        heading === 'Consumer Insights' ||
-                        heading === 'Technological Trends' ||
-                        heading === 'Regulatory Environment') && (
-                          <Lottie animationData={crown} className='h-20 w-32 transform -translate-y-24 right-0 translate-x-16 bg-transparent z-999 absolute' />
-                          // <FaCrown className='h-8 w-8 transform top-4 right-6 bg-transparent z-10  ' />
-                        )}
-                    </div>
-                    {(
-                      heading === 'Market Segmentation' ||
-                      heading === 'Competitive Landscape' ||
-                      heading === 'SWOT Analysis' ||
-                      heading === 'Consumer Insights' ||
-                      heading === 'Technological Trends' ||
-                      heading === 'Regulatory Environment'
-                    ) && (paid === 'a') ? (
-                      <div
-                        dangerouslySetInnerHTML={{ __html: reports[heading] }}
-                        className={"blur-sm"}
-                      />
-                    ) : (
-                      <div dangerouslySetInnerHTML={{ __html: reports[heading] }} />
-                    )}
+          </div>
 
-                  </div>
+        ) : null
+      ))}
+      {Object.keys(chartData).map((key, index) => {
+        const chartDetails = chartData[key];
+        return (
+          <div
+            key={index}
+            className='bg-gray-100 px-8 py-8 rounded-xl relative'
+            style={{ fontSize: '16px' }} // Adjust font size for chart titles
+          >
+            <h1 className='text-left mb-6 text-primary font-bold' style={{ fontSize: '22px' }}>
+              {chartDetails.title}
+            </h1>
+            {renderCharts(chartDetails)}
+          </div>
+        );
+      })}
+    </Masonry>
+  </ResponsiveMasonry>
+</div>
 
-                ) : null
-              ))}
-              {Object.keys(chartData).map((key, index) => {
-                const chartDetails = chartData[key];
-                return (
-                  <div
-                    key={index}
-                    className='bg-gray-100 px-8 py-8 rounded-xl relative'
-                  >
-                    <h1 className='text-left text-2xl mb-6 text-primary font-bold'>{chartDetails.title}</h1>
-                    {renderCharts(chartDetails)}
-                  </div>
-                );
-              })}
-            </Masonry>
-
-
-          </ResponsiveMasonry>
-        </div>
         <div className={`flex justify-center gap-10 py-12 ${!noReportData ? "hidden" : ""}`}>
           <DownloadButton dwnldBtn={downloadPDF} />
           <ReButton />

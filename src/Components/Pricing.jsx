@@ -159,7 +159,11 @@ const Pricing = ({ user }) => {
             </li>
             <li className="flex text-lg mb-2">
               <img src="https://res.cloudinary.com/williamsondesign/check-grey.svg" />
-              <span className="ml-3"><span className="text-black">Upto 2 </span> extra Revisions to update a report.</span>
+              <span className="ml-3"><span className="text-black">Unlimited </span> Pdf Downloads</span>
+            </li>
+            <li className="flex text-lg mb-2">
+              <img src="https://res.cloudinary.com/williamsondesign/check-grey.svg" />
+              <span className="ml-3"><span className="text-black">Access to </span> History</span>
             </li>
           </ul>
           <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => openUserDetails(129)}>
@@ -185,7 +189,11 @@ const Pricing = ({ user }) => {
             </li>
             <li className="flex">
               <img src="https://res.cloudinary.com/williamsondesign/check-grey.svg" />
-              <span className="ml-3"><span className="text-black">Upto 3 </span> extra Revisions to update a report.</span>
+              <span className="ml-3"><span className="text-black">Unlimited </span> Pdf Download</span>
+            </li>
+            <li className="flex">
+              <img src="https://res.cloudinary.com/williamsondesign/check-grey.svg" />
+              <span className="ml-3"><span className="text-black">Access to </span> History</span>
             </li>
           </ul>
           <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => openUserDetails(299)}>
@@ -208,7 +216,11 @@ const Pricing = ({ user }) => {
             </li>
             <li className="flex text-lg mb-2">
               <img src="https://res.cloudinary.com/williamsondesign/check-grey.svg" />
-              <span className="ml-3">Unused report credits <span className="text-black">rolled over to the next month</span></span>
+              <span className="ml-3">Unlimited <span className="text-black">Pdf Download</span></span>
+            </li>
+            <li className="flex text-lg mb-2">
+              <img src="https://res.cloudinary.com/williamsondesign/check-grey.svg" />
+              <span className="ml-3"><span className="text-black">Access to </span> History</span>
             </li>
           </ul>
           <div className="flex justify-center items-center bg-primary hover:bg-blue-700 rounded-xl py-5 px-4 text-center text-white text-xl" onClick={() => openUserDetails(799)}>
