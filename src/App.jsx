@@ -19,6 +19,7 @@ import Dashboard from './Pages/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ErrorPage from './Components/ErrorPage';
+import { LineWave } from 'react-loader-spinner'
 
 import './App.css'
 
@@ -33,26 +34,26 @@ function App() {
   const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
   });
-  let value = params.token; 
+  let value = params.token;
 
-  console.log('token getting from url :',value);
+  console.log('token getting from url :', value);
 
-  if (value){
+  if (value) {
     localStorage.setItem('token', value);
     const apiUrl = import.meta.env.VITE_CLIENT_URL;
     window.location.href = apiUrl;
   }
 
   const storedToken = localStorage.getItem('token');
-  if (storedToken && !user){
-    
+  if (storedToken && !user) {
+
   }
-console.log('Token from local storage:', storedToken);
+  console.log('Token from local storage:', storedToken);
 
 
 
   const getUser = async () => {
-    setLoading(true); 
+    setLoading(true);
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       const url = `${apiUrl}/login/success`;
@@ -60,7 +61,7 @@ console.log('Token from local storage:', storedToken);
         Authorization: `Bearer ${storedToken}`,
       };
       const { data } = await axios.get(url, { withCredentials: true, headers: headers });
-      
+
       if (data.user) {
         console.log("User details:", data.user);
         setUser(data.user);
@@ -72,13 +73,13 @@ console.log('Token from local storage:', storedToken);
       console.log("Login error:", error);
       setLoggedIn(false);
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (storedToken && !user) {
-      
+
       getUser();
     }
   }, [storedToken, user]);
@@ -88,8 +89,8 @@ console.log('Token from local storage:', storedToken);
   };
 
   const handleLogout = async () => {
-      setLoggedIn(false);
-      setUser(null);
+    setLoggedIn(false);
+    setUser(null);
   };
 
   const ToModalOpen = () => {
@@ -108,32 +109,48 @@ console.log('Token from local storage:', storedToken);
         user={user}
         ToModalOpen={ToModalOpen}
       />
-       {loading ? ( 
-      //  loader css file in App.css name is ".loader" and make proper 
-        <div className="loader">Loading...</div>
+      {loading ? (
+
+        //  loader css file in App.css name is ".loader" and make proper
+
+        <div className=' flex items-center justify-center h-[80vh]'>
+
+          <LineWave
+            visible={true}
+            height="100"
+            width="100"
+            color="#2945FF"
+            ariaLabel="line-wave-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+            firstLineColor=""
+            middleLineColor=""
+            lastLineColor=""
+          />
+        </div>
       ) : (
         <>
-      <Routes>
-        <Route path='/' element={<LandingPage user={user} />} />
-        <Route path='/login' element={
-          <ProtectedRoute loggedIn={loggedIn}>
-            <LoginPage handleLogin={handleLogin} getUser={getUser} />
-          </ProtectedRoute>
-        } />
-        <Route path='/explore' element={<Explore user={user} />} />
-        <Route path='/terms' element={<TermsPage />} />
-        <Route path='/aboutus' element={<AboutUsPage />} />
-        <Route path='/refund-policies' element={<RefundPolicy />} />
-        <Route path='/privacy' element={<PrivacyPolicy />} />
-        <Route path='/payment' element={<Payment />} />
-        <Route path='/test' element={<Test />} />
-        <Route path='/dashboard' element={<Dashboard user={user} />} />
-        <Route path='*' element={<ErrorPage />} />
-      </Routes>
-      
-      <Footer />
+          <Routes>
+            <Route path='/' element={<LandingPage user={user} />} />
+            <Route path='/login' element={
+              <ProtectedRoute loggedIn={loggedIn}>
+                <LoginPage handleLogin={handleLogin} getUser={getUser} />
+              </ProtectedRoute>
+            } />
+            <Route path='/explore' element={<Explore user={user} />} />
+            <Route path='/terms' element={<TermsPage />} />
+            <Route path='/aboutus' element={<AboutUsPage />} />
+            <Route path='/refund-policies' element={<RefundPolicy />} />
+            <Route path='/privacy' element={<PrivacyPolicy />} />
+            <Route path='/payment' element={<Payment />} />
+            <Route path='/test' element={<Test />} />
+            <Route path='/dashboard' element={<Dashboard user={user} />} />
+            <Route path='*' element={<ErrorPage />} />
+          </Routes>
 
-      </>
+          <Footer />
+
+        </>
       )}
 
       <Modal
